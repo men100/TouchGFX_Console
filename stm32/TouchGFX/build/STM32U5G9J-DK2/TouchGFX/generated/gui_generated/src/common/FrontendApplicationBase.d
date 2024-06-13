@@ -52,6 +52,7 @@ TouchGFX/build/STM32U5G9J-DK2/TouchGFX/generated/gui_generated/src/common/Fronte
  TouchGFX/gui/include/gui/screen1_screen/Screen1Presenter.hpp \
  TouchGFX/gui/include/gui/model/ModelListener.hpp \
  Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Box.hpp \
+ Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Image.hpp \
  TouchGFX/generated/texts/include/texts/TextKeysAndLanguages.hpp \
  Middlewares/ST/touchgfx/framework/include/touchgfx/Texts.hpp
 
@@ -158,6 +159,8 @@ TouchGFX/gui/include/gui/screen1_screen/Screen1Presenter.hpp:
 TouchGFX/gui/include/gui/model/ModelListener.hpp:
 
 Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Box.hpp:
+
+Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Image.hpp:
 
 TouchGFX/generated/texts/include/texts/TextKeysAndLanguages.hpp:
 

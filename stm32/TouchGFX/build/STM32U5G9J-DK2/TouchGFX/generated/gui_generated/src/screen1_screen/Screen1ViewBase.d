@@ -46,7 +46,9 @@ TouchGFX/build/STM32U5G9J-DK2/TouchGFX/generated/gui_generated/src/screen1_scree
  TouchGFX/gui/include/gui/screen1_screen/Screen1Presenter.hpp \
  TouchGFX/gui/include/gui/model/ModelListener.hpp \
  Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Box.hpp \
- Middlewares/ST/touchgfx/framework/include/touchgfx/Color.hpp
+ Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Image.hpp \
+ Middlewares/ST/touchgfx/framework/include/touchgfx/Color.hpp \
+ TouchGFX/generated/images/include/images/BitmapDatabase.hpp
 
 TouchGFX/generated/gui_generated/include/gui_generated/screen1_screen/Screen1ViewBase.hpp:
 
@@ -140,4 +142,8 @@ TouchGFX/gui/include/gui/model/ModelListener.hpp:
 
 Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Box.hpp:
 
+Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Image.hpp:
+
 Middlewares/ST/touchgfx/framework/include/touchgfx/Color.hpp:
+
+TouchGFX/generated/images/include/images/BitmapDatabase.hpp:

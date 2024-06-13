@@ -45,10 +45,10 @@
 #define NEMAGFX_STENCIL_POOL_SIZE      389120 /* NemaGFX stencil buffer pool size in byte */
 
 LOCATION_PRAGMA_NOLOAD("Nemagfx_Memory_Pool_Buffer")
-static uint8_t nemagfx_pool_mem[NEMAGFX_MEM_POOL_SIZE]; /* NemaGFX memory pool */
+static uint8_t nemagfx_pool_mem[NEMAGFX_MEM_POOL_SIZE] LOCATION_ATTRIBUTE_NOLOAD("Nemagfx_Memory_Pool_Buffer"); /* NemaGFX memory pool */
 
 LOCATION_PRAGMA_NOLOAD("Nemagfx_Stencil_Buffer")
-static uint8_t nemagfx_stencil_buffer_mem[NEMAGFX_STENCIL_POOL_SIZE]; /* NemaGFX stencil buffer memory */
+static uint8_t nemagfx_stencil_buffer_mem[NEMAGFX_STENCIL_POOL_SIZE] LOCATION_ATTRIBUTE_NOLOAD("Nemagfx_Stencil_Buffer"); /* NemaGFX stencil buffer memory */
 
 static nema_ringbuffer_t ring_buffer_str;
 volatile static int last_cl_id = -1;

@@ -57,6 +57,7 @@ TouchGFX/build/STM32U5G9J-DK2/TouchGFX/Target/generated/TouchGFXConfiguration.o:
  TouchGFX/gui/include/gui/screen1_screen/Screen1Presenter.hpp \
  TouchGFX/gui/include/gui/model/ModelListener.hpp \
  Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Box.hpp \
+ Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Image.hpp \
  TouchGFX/generated/images/include/BitmapDatabase.hpp \
  TouchGFX/generated/images/include/images/BitmapDatabase.hpp \
  Middlewares/ST/touchgfx/framework/include/touchgfx/VectorFontRendererImpl.hpp \
@@ -119,6 +120,8 @@ TouchGFX/build/STM32U5G9J-DK2/TouchGFX/Target/generated/TouchGFXConfiguration.o:
  Drivers/STM32U5xx_HAL_Driver/Inc/stm32u5xx_hal_pwr_ex.h \
  Drivers/STM32U5xx_HAL_Driver/Inc/stm32u5xx_hal_tim.h \
  Drivers/STM32U5xx_HAL_Driver/Inc/stm32u5xx_hal_tim_ex.h \
+ Drivers/STM32U5xx_HAL_Driver/Inc/stm32u5xx_hal_uart.h \
+ Drivers/STM32U5xx_HAL_Driver/Inc/stm32u5xx_hal_uart_ex.h \
  Drivers/STM32U5xx_HAL_Driver/Inc/stm32u5xx_hal_exti.h \
  Drivers/STM32U5xx_HAL_Driver/Inc/stm32u5xx_hal_gpu2d.h \
  Drivers/STM32U5xx_HAL_Driver/Inc/stm32u5xx_hal_xspi.h \
@@ -237,6 +240,8 @@ TouchGFX/gui/include/gui/screen1_screen/Screen1Presenter.hpp:
 TouchGFX/gui/include/gui/model/ModelListener.hpp:
 
 Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Box.hpp:
+
+Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Image.hpp:
 
 TouchGFX/generated/images/include/BitmapDatabase.hpp:
 
@@ -367,6 +372,10 @@ Drivers/STM32U5xx_HAL_Driver/Inc/stm32u5xx_hal_pwr_ex.h:
 Drivers/STM32U5xx_HAL_Driver/Inc/stm32u5xx_hal_tim.h:
 
 Drivers/STM32U5xx_HAL_Driver/Inc/stm32u5xx_hal_tim_ex.h:
+
+Drivers/STM32U5xx_HAL_Driver/Inc/stm32u5xx_hal_uart.h:
+
+Drivers/STM32U5xx_HAL_Driver/Inc/stm32u5xx_hal_uart_ex.h:
 
 Drivers/STM32U5xx_HAL_Driver/Inc/stm32u5xx_hal_exti.h:
 

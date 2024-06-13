@@ -46,7 +46,8 @@ TouchGFX/build/STM32U5G9J-DK2/TouchGFX/gui/src/screen1_screen/Screen1View.o: \
  Middlewares/ST/touchgfx/framework/include/mvp/View.hpp \
  TouchGFX/gui/include/gui/screen1_screen/Screen1Presenter.hpp \
  TouchGFX/gui/include/gui/model/ModelListener.hpp \
- Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Box.hpp
+ Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Box.hpp \
+ Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Image.hpp
 
 TouchGFX/gui/include/gui/screen1_screen/Screen1View.hpp:
 
@@ -141,3 +142,5 @@ TouchGFX/gui/include/gui/screen1_screen/Screen1Presenter.hpp:
 TouchGFX/gui/include/gui/model/ModelListener.hpp:
 
 Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Box.hpp:
+
+Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Image.hpp:

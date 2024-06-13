@@ -18,8 +18,8 @@ Screen.hpp:115:18:virtual void touchgfx::Screen::tearDownScreen()	0	static
 Screen.hpp:144:18:virtual void touchgfx::Screen::handleTickEvent()	0	static
 Screen.hpp:154:18:virtual void touchgfx::Screen::handleKeyEvent(uint8_t)	0	static
 View.hpp:36:7:touchgfx::View<Screen1Presenter>::~View()	0	static
-Screen1ViewBase.cpp:14:1:Screen1ViewBase::~Screen1ViewBase()	0	static
-Screen1ViewBase.cpp:19:6:virtual void Screen1ViewBase::setupScreen()	0	static
+Screen1ViewBase.cpp:19:1:Screen1ViewBase::~Screen1ViewBase()	0	static
+Screen1ViewBase.cpp:24:6:virtual void Screen1ViewBase::setupScreen()	0	static
 View.hpp:36:7:virtual touchgfx::View<Screen1Presenter>::~View()	8	static
-Screen1ViewBase.cpp:14:1:virtual Screen1ViewBase::~Screen1ViewBase()	8	static
-Screen1ViewBase.cpp:7:1:Screen1ViewBase::Screen1ViewBase()	16	static
+Screen1ViewBase.cpp:19:1:virtual Screen1ViewBase::~Screen1ViewBase()	8	static
+Screen1ViewBase.cpp:8:1:Screen1ViewBase::Screen1ViewBase()	40	static
