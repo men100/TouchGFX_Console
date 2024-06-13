@@ -1,2 +1,2 @@
 # TouchGFX_Console
-This is program that control connected PC.
+This is the program that control connected PC.
