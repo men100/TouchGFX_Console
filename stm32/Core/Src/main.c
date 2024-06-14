@@ -92,7 +92,11 @@ static void MX_USART1_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+#include <stdio.h>
+int __io_putchar(uint8_t ch)
+{
+	return ITM_SendChar(ch);
+}
 /* USER CODE END 0 */
 
 /**
@@ -144,6 +148,13 @@ int main(void)
   MX_TouchGFX_PreOSInit();
   /* USER CODE BEGIN 2 */
 
+  // Debug Print
+  /*
+  while (1) {
+	  printf("Debug\r\n");
+	  HAL_Delay(1000);
+  }
+  */
   /*
   char msg[32];
   while (1) {
@@ -171,8 +182,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
-
+	/* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
