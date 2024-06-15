@@ -33,6 +33,15 @@ namespace windows11
                 System.Windows.Forms.SendKeys.SendWait(" ");
             }
 
+            // Volumer を経由してボリュームを操作するには
+            // p.ProcessName == "Volumer" でマッチする
+            // 音量上げる: System.Windows.Forms.SendKeys.SendWait("%{F12}");
+            // 音量下げる: System.Windows.Forms.SendKeys.SendWait("%{F11}");
+
+            // ScreenInStyle を経由して EV2785 のソースを操作するには
+            // p.ProcessName == "ScreenInStyle" でマッチする
+            // DisplayPort: System.Windows.Forms.SendKeys.SendWait("^+1");
+            // HDMI1: System.Windows.Forms.SendKeys.SendWait("^+2");
         }
     }
 
