@@ -1,3 +1,0 @@
-C:/dev/git/TouchGFX_Console/stm32/Core/Src/app_freertos.c:141:6:StartDefaultTask	8	static
-C:/dev/git/TouchGFX_Console/stm32/Core/Src/app_freertos.c:78:6:vApplicationIdleHook	0	static
-C:/dev/git/TouchGFX_Console/stm32/Core/Src/app_freertos.c:99:6:MX_FREERTOS_Init	8	static
