@@ -149,6 +149,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   // Debug Print
+  // use #include <stdio.h>
   /*
   while (1) {
 	  printf("Debug\r\n");
@@ -165,6 +166,25 @@ int main(void)
   }
   */
 
+  /*
+	control Back Light
+	use #include "main.h"
+  int isBlOn = 0;
+  while (1) {
+	  if (HAL_GPIO_ReadPin(USER_BUTTON_GPIO_Port, USER_BUTTON_Pin) == GPIO_PIN_SET) {
+		  if (isBlOn) {
+			  HAL_GPIO_WritePin(LCD_BL_CTRL_GPIO_Port, LCD_BL_CTRL_Pin, GPIO_PIN_RESET);
+			  isBlOn = 0;
+			  printf("BL is off\n");
+		  } else {
+			  HAL_GPIO_WritePin(LCD_BL_CTRL_GPIO_Port, LCD_BL_CTRL_Pin, GPIO_PIN_SET);
+			  isBlOn = 1;
+			  printf("BL is on\n");
+		  }
+	  }
+	  HAL_Delay(1000);
+  }
+  */
   /* USER CODE END 2 */
 
   /* Init scheduler */
