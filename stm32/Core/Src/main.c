@@ -185,6 +185,10 @@ int main(void)
 	  HAL_Delay(1000);
   }
   */
+
+  // Control User LED (if RESET, turn on)
+  //HAL_GPIO_WritePin(USER_LD2_RED_GPIO_Port, USER_LD2_RED_Pin, GPIO_PIN_RESET);
+  //HAL_GPIO_WritePin(USER_LD3_GREEN_GPIO_Port, USER_LD3_GREEN_Pin, GPIO_PIN_RESET);
   /* USER CODE END 2 */
 
   /* Init scheduler */
