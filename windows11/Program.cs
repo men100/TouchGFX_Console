@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Management;
 using System.Windows.Forms;
 using NAudio.CoreAudioApi;
 
@@ -7,6 +8,18 @@ namespace windows11
 {
     internal class Program
     {
+        static void memory(System.Management.ManagementObject mo)
+        {
+            decimal totalVisibleMemorySize = decimal.Parse(mo["TotalVisibleMemorySize"].ToString());
+            decimal freePhysicalMemory = decimal.Parse(mo["FreePhysicalMemory"].ToString());
+            decimal usePhysicalMemory = totalVisibleMemorySize - freePhysicalMemory;
+
+            Console.WriteLine("usePhysicalMemory: {0:N0}KiB, {1:0.0}GiB", usePhysicalMemory, usePhysicalMemory / 1024 / 1024);
+            Console.WriteLine("freePhysicalMemory: {0:N0}KiB, {1:0.0}GiB", freePhysicalMemory, freePhysicalMemory / 1024 / 1024);
+            Console.WriteLine("totalVisibleMemorySize: {0:N0}KiB, {1:0.0}GiB", totalVisibleMemorySize, totalVisibleMemorySize / 1024 / 1024);
+            Console.WriteLine("usage: {0:0}%", usePhysicalMemory / totalVisibleMemorySize * 100);
+        }
+
         [DllImport("user32.dll")]
         private static extern bool SetForegroundWindow(IntPtr hWnd);
         static void Main(string[] args)
@@ -52,6 +65,37 @@ namespace windows11
             //float systemVolume = device.AudioEndpointVolume.MasterVolumeLevelScalar;
             // 音量をパーセンテージ(0～100)に変換して表示
             //Console.WriteLine($"System volume: {systemVolume * 100:0}%");
+
+            // CPU 使用率を取得
+            /*
+            // カテゴリ名・カウンタ名・インスタンス名を指定してPerformanceCounterのインスタンスを作成
+            var pc = new PerformanceCounter("Processor Information", "% Processor Utility", "_Total");
+            for (; ; )
+            {
+                // カウンタの値を取得して、値を0.0～1.0の範囲にする
+                var percent = pc.NextValue() / 100.0f;
+
+                // パーセント値として表示
+                Console.WriteLine("{0,8:P2}", percent);
+
+                Thread.Sleep(1000);
+            }
+            */
+
+            // メモリ使用量を取得
+            /*
+            // WMIインスタンスを取得
+            using (ManagementClass mc = new System.Management.ManagementClass("Win32_OperatingSystem"))
+            using (ManagementObjectCollection ins = mc.GetInstances())
+            {
+                foreach (System.Management.ManagementObject mo in ins)
+                {
+                    memory(mo); // ローカルメソッド呼び出し
+                    mo.Dispose();
+                    break;
+                }
+            }
+            */
         }
     }
 
