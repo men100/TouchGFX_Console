@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using NAudio.CoreAudioApi;
 
 namespace windows11
 {
@@ -42,6 +43,15 @@ namespace windows11
             // p.ProcessName == "ScreenInStyle" でマッチする
             // DisplayPort: System.Windows.Forms.SendKeys.SendWait("^+1");
             // HDMI1: System.Windows.Forms.SendKeys.SendWait("^+2");
+
+            // システム全体の音量設定値を取得
+            // デフォルトの音声出力デバイスを取得
+            //var enumerator = new MMDeviceEnumerator();
+            //var device = enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Console);
+            // システムの音量設定値を0～1の範囲で取得
+            //float systemVolume = device.AudioEndpointVolume.MasterVolumeLevelScalar;
+            // 音量をパーセンテージ(0～100)に変換して表示
+            //Console.WriteLine($"System volume: {systemVolume * 100:0}%");
         }
     }
 
