@@ -96,6 +96,31 @@ namespace windows11
                 }
             }
             */
+
+            // GPU 使用率を取得
+            /*
+            var category = new PerformanceCounterCategory("GPU Engine");
+            var counterNames = category.GetInstanceNames();
+            var gpuCounters = counterNames
+                .Where(counterName => counterName.EndsWith("engtype_3D"))
+                .SelectMany(counterName => category.GetCounters(counterName))
+                .Where(counter => counter.CounterName.Equals("Utilization Percentage"))
+                .ToList();
+
+            for (; ; )
+            {
+                float result = 0.0f;
+                foreach (PerformanceCounter gpuCounter in gpuCounters)
+                {
+                    float tmpValue = gpuCounter.NextValue();
+                    result += tmpValue;
+                }
+                Console.WriteLine($"GPU Usage: {result:0}%");
+
+                Thread.Sleep(1000);
+            }
+            */
+
         }
     }
 
