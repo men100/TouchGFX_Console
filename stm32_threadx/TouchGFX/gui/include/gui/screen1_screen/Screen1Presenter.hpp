@@ -27,6 +27,18 @@ public:
 
     virtual ~Screen1Presenter() {}
 
+    void play()
+    {
+    	model->play();
+    }
+    void nextMusic()
+    {
+    	model->nextMusic();
+    }
+    void prevMusic()
+    {
+    	model->prevMusic();
+    }
     void volumeUp()
     {
     	model->volumeUp();
@@ -34,6 +46,22 @@ public:
     void volumeDown()
     {
     	model->volumeDown();
+    }
+    void displayPort()
+    {
+    	model->displayPort();
+    }
+    void hdmi1()
+    {
+    	model->hdmi1();
+    }
+    void hdmi2()
+    {
+    	model->hdmi2();
+    }
+    void typec()
+    {
+    	model->typec();
     }
 private:
     Screen1Presenter();

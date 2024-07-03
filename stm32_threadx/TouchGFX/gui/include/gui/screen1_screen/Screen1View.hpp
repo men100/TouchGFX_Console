@@ -12,8 +12,16 @@ public:
     virtual void setupScreen();
     virtual void tearDownScreen();
 
+    virtual void play();
+    virtual void nextMusic();
+    virtual void prevMusic();
     virtual void volumeUp();
     virtual void volumeDown();
+
+    virtual void displayPort();
+    virtual void hdmi1();
+    virtual void hdmi2();
+    virtual void typec();
 protected:
 };
 

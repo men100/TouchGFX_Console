@@ -28,6 +28,34 @@ public:
     {
         // Override and implement this function in Screen1
     }
+    virtual void play()
+    {
+        // Override and implement this function in Screen1
+    }
+    virtual void nextMusic()
+    {
+        // Override and implement this function in Screen1
+    }
+    virtual void prevMusic()
+    {
+        // Override and implement this function in Screen1
+    }
+    virtual void displayPort()
+    {
+        // Override and implement this function in Screen1
+    }
+    virtual void hdmi1()
+    {
+        // Override and implement this function in Screen1
+    }
+    virtual void hdmi2()
+    {
+        // Override and implement this function in Screen1
+    }
+    virtual void typec()
+    {
+        // Override and implement this function in Screen1
+    }
 
 protected:
     FrontendApplication& application() {
@@ -39,6 +67,13 @@ protected:
      */
     touchgfx::Box __background;
     touchgfx::ButtonWithLabel volumeUpButton;
+    touchgfx::ButtonWithLabel playButton;
+    touchgfx::ButtonWithLabel nextButton;
+    touchgfx::ButtonWithLabel prevButton;
+    touchgfx::ButtonWithLabel displayportButton;
+    touchgfx::ButtonWithLabel hdmi1Button;
+    touchgfx::ButtonWithLabel hdmi2Button;
+    touchgfx::ButtonWithLabel typecButton;
     touchgfx::ButtonWithLabel volumeDownButton;
 
 private:

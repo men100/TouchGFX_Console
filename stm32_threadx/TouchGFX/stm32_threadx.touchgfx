@@ -7,7 +7,8 @@
           {
             "Type": "ButtonWithLabel",
             "Name": "volumeUpButton",
-            "X": 187,
+            "X": 639,
+            "Y": 171,
             "Width": 138,
             "Height": 138,
             "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
@@ -28,7 +29,170 @@
           },
           {
             "Type": "ButtonWithLabel",
+            "Name": "playButton",
+            "X": 172,
+            "Y": 171,
+            "Width": 138,
+            "Height": 138,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_action.png",
+            "TextId": "__SingleUse_DTVB",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "alternate_theme\\presets\\button\\icon\\rounded\\medium_fill_action.json"
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "nextButton",
+            "X": 325,
+            "Y": 171,
+            "Width": 138,
+            "Height": 138,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_action.png",
+            "TextId": "__SingleUse_YO9U",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "alternate_theme\\presets\\button\\icon\\rounded\\medium_fill_action.json"
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "prevButton",
+            "X": 19,
+            "Y": 171,
+            "Width": 138,
+            "Height": 138,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_action.png",
+            "TextId": "__SingleUse_LNUN",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "alternate_theme\\presets\\button\\icon\\rounded\\medium_fill_action.json"
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "displayportButton",
+            "X": 19,
+            "Y": 322,
+            "Width": 138,
+            "Height": 138,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_active.png",
+            "TextId": "__SingleUse_EGPT",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "alternate_theme\\presets\\button\\icon\\rounded\\medium_fill_active.json"
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "hdmi1Button",
+            "X": 172,
+            "Y": 322,
+            "Width": 138,
+            "Height": 138,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_active.png",
+            "TextId": "__SingleUse_JU3E",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "alternate_theme\\presets\\button\\icon\\rounded\\medium_fill_active.json"
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "hdmi2Button",
+            "X": 325,
+            "Y": 322,
+            "Width": 138,
+            "Height": 138,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_active.png",
+            "TextId": "__SingleUse_RC2N",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "alternate_theme\\presets\\button\\icon\\rounded\\medium_fill_active.json"
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "typecButton",
+            "X": 481,
+            "Y": 322,
+            "Width": 138,
+            "Height": 138,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_active.png",
+            "TextId": "__SingleUse_82L4",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "alternate_theme\\presets\\button\\icon\\rounded\\medium_fill_active.json"
+          },
+          {
+            "Type": "ButtonWithLabel",
             "Name": "volumeDownButton",
+            "X": 481,
+            "Y": 171,
             "Width": 138,
             "Height": 138,
             "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
@@ -69,6 +233,83 @@
             "Action": {
               "Type": "ActionCustom",
               "FunctionName": "volumeDown"
+            }
+          },
+          {
+            "InteractionName": "PlayButton_Interaction",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "playButton"
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "play"
+            }
+          },
+          {
+            "InteractionName": "NextButton_Interaction",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "nextButton"
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "nextMusic"
+            }
+          },
+          {
+            "InteractionName": "PrevButton_Interaction",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "prevButton"
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "prevMusic"
+            }
+          },
+          {
+            "InteractionName": "DisplayPortButton_Interaction",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "displayportButton"
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "displayPort"
+            }
+          },
+          {
+            "InteractionName": "HDMI1Button_Interaction",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "hdmi1Button"
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "hdmi1"
+            }
+          },
+          {
+            "InteractionName": "HDMI2Button_Interaction",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "hdmi2Button"
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "hdmi2"
+            }
+          },
+          {
+            "InteractionName": "TypeCButton_Interaction",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "typecButton"
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "typec"
             }
           }
         ]

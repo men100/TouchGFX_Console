@@ -6,6 +6,27 @@
   <Texts>
     <TextGroup Id="Group1" />
     <TextGroup Id="Unsorted">
+      <Text Id="__SingleUse_82L4" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">USB-C</Translation>
+      </Text>
+      <Text Id="__SingleUse_RC2N" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">HDMI2</Translation>
+      </Text>
+      <Text Id="__SingleUse_JU3E" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">HDMI1</Translation>
+      </Text>
+      <Text Id="__SingleUse_EGPT" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">DisplayPort</Translation>
+      </Text>
+      <Text Id="__SingleUse_LNUN" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">Prev</Translation>
+      </Text>
+      <Text Id="__SingleUse_YO9U" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">Next</Translation>
+      </Text>
+      <Text Id="__SingleUse_DTVB" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">Play/Pause</Translation>
+      </Text>
       <Text Id="__SingleUse_VPF3" Alignment="Center" TypographyId="Default">
         <Translation Language="GB">Volume-</Translation>
       </Text>

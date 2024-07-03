@@ -13,7 +13,7 @@ Screen1ViewBase::Screen1ViewBase() :
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     add(__background);
 
-    volumeUpButton.setXY(187, 0);
+    volumeUpButton.setXY(639, 171);
     volumeUpButton.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_ACTION_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_PRESSED_ID));
     volumeUpButton.setLabelText(touchgfx::TypedText(T___SINGLEUSE_RHLM));
     volumeUpButton.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
@@ -21,7 +21,63 @@ Screen1ViewBase::Screen1ViewBase() :
     volumeUpButton.setAction(buttonCallback);
     add(volumeUpButton);
 
-    volumeDownButton.setXY(0, 0);
+    playButton.setXY(172, 171);
+    playButton.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_ACTION_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_PRESSED_ID));
+    playButton.setLabelText(touchgfx::TypedText(T___SINGLEUSE_DTVB));
+    playButton.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    playButton.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    playButton.setAction(buttonCallback);
+    add(playButton);
+
+    nextButton.setXY(325, 171);
+    nextButton.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_ACTION_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_PRESSED_ID));
+    nextButton.setLabelText(touchgfx::TypedText(T___SINGLEUSE_YO9U));
+    nextButton.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    nextButton.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    nextButton.setAction(buttonCallback);
+    add(nextButton);
+
+    prevButton.setXY(19, 171);
+    prevButton.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_ACTION_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_PRESSED_ID));
+    prevButton.setLabelText(touchgfx::TypedText(T___SINGLEUSE_LNUN));
+    prevButton.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    prevButton.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    prevButton.setAction(buttonCallback);
+    add(prevButton);
+
+    displayportButton.setXY(19, 322);
+    displayportButton.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_ACTIVE_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_PRESSED_ID));
+    displayportButton.setLabelText(touchgfx::TypedText(T___SINGLEUSE_EGPT));
+    displayportButton.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    displayportButton.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    displayportButton.setAction(buttonCallback);
+    add(displayportButton);
+
+    hdmi1Button.setXY(172, 322);
+    hdmi1Button.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_ACTIVE_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_PRESSED_ID));
+    hdmi1Button.setLabelText(touchgfx::TypedText(T___SINGLEUSE_JU3E));
+    hdmi1Button.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    hdmi1Button.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    hdmi1Button.setAction(buttonCallback);
+    add(hdmi1Button);
+
+    hdmi2Button.setXY(325, 322);
+    hdmi2Button.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_ACTIVE_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_PRESSED_ID));
+    hdmi2Button.setLabelText(touchgfx::TypedText(T___SINGLEUSE_RC2N));
+    hdmi2Button.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    hdmi2Button.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    hdmi2Button.setAction(buttonCallback);
+    add(hdmi2Button);
+
+    typecButton.setXY(481, 322);
+    typecButton.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_ACTIVE_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_PRESSED_ID));
+    typecButton.setLabelText(touchgfx::TypedText(T___SINGLEUSE_82L4));
+    typecButton.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    typecButton.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    typecButton.setAction(buttonCallback);
+    add(typecButton);
+
+    volumeDownButton.setXY(481, 171);
     volumeDownButton.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_ACTION_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_PRESSED_ID));
     volumeDownButton.setLabelText(touchgfx::TypedText(T___SINGLEUSE_VPF3));
     volumeDownButton.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
@@ -55,5 +111,54 @@ void Screen1ViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)
         //When volumeDownButton clicked call virtual function
         //Call volumeDown
         volumeDown();
+    }
+    if (&src == &playButton)
+    {
+        //PlayButton_Interaction
+        //When playButton clicked call virtual function
+        //Call play
+        play();
+    }
+    if (&src == &nextButton)
+    {
+        //NextButton_Interaction
+        //When nextButton clicked call virtual function
+        //Call nextMusic
+        nextMusic();
+    }
+    if (&src == &prevButton)
+    {
+        //PrevButton_Interaction
+        //When prevButton clicked call virtual function
+        //Call prevMusic
+        prevMusic();
+    }
+    if (&src == &displayportButton)
+    {
+        //DisplayPortButton_Interaction
+        //When displayportButton clicked call virtual function
+        //Call displayPort
+        displayPort();
+    }
+    if (&src == &hdmi1Button)
+    {
+        //HDMI1Button_Interaction
+        //When hdmi1Button clicked call virtual function
+        //Call hdmi1
+        hdmi1();
+    }
+    if (&src == &hdmi2Button)
+    {
+        //HDMI2Button_Interaction
+        //When hdmi2Button clicked call virtual function
+        //Call hdmi2
+        hdmi2();
+    }
+    if (&src == &typecButton)
+    {
+        //TypeCButton_Interaction
+        //When typecButton clicked call virtual function
+        //Call typec
+        typec();
     }
 }

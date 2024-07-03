@@ -10,6 +10,13 @@ KEEP extern const uint32_t indicesGb[] TEXT_LOCATION_FLASH_ATTRIBUTE;
 // Remap all strings
 TEXT_LOCATION_FLASH_PRAGMA
 KEEP extern const uint32_t indicesGb[] TEXT_LOCATION_FLASH_ATTRIBUTE = {
-    8, // T___SINGLEUSE_VPF3: "Volume-"
-    0  // T___SINGLEUSE_RHLM: "Volume+"
+    51, // T___SINGLEUSE_82L4: "USB-C"
+    45, // T___SINGLEUSE_RC2N: "HDMI2"
+    39, // T___SINGLEUSE_JU3E: "HDMI1"
+    0,  // T___SINGLEUSE_EGPT: "DisplayPort"
+    62, // T___SINGLEUSE_LNUN: "Prev"
+    57, // T___SINGLEUSE_YO9U: "Next"
+    12, // T___SINGLEUSE_DTVB: "Play/Pause"
+    31, // T___SINGLEUSE_VPF3: "Volume-"
+    23  // T___SINGLEUSE_RHLM: "Volume+"
 };

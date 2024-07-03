@@ -17,8 +17,16 @@ public:
 
     void tick();
 
+    void play();
+    void nextMusic();
+    void prevMusic();
     void volumeUp();
     void volumeDown();
+
+    void displayPort();
+    void hdmi1();
+    void hdmi2();
+    void typec();
 protected:
     ModelListener* modelListener;
     int16_t tickCounter;
