@@ -14,6 +14,7 @@ namespace windows11
         static byte volume = 0;
         static Process? amazonMusicProcess;
         static Process? volumerProcess;
+        static Process? screenInStyleProcess;
 
 
         struct Packet
@@ -49,6 +50,39 @@ namespace windows11
             Console.WriteLine("usage: {0:0}%", usePhysicalMemory / totalVisibleMemorySize * 100);
         }
 
+        // Play (or Pause)
+        static void Play()
+        {
+            if (amazonMusicProcess != null)
+            {
+                SetForegroundWindow(amazonMusicProcess.MainWindowHandle);
+                // Space
+                System.Windows.Forms.SendKeys.SendWait(" ");
+            }
+        }
+
+        // 次の曲へ
+        static void NextMusic()
+        {
+            if (amazonMusicProcess != null)
+            {
+                SetForegroundWindow(amazonMusicProcess.MainWindowHandle);
+                // Space
+                System.Windows.Forms.SendKeys.SendWait("{RIGHT}");
+            }
+        }
+
+        // 前の曲へ
+        static void PrevMusic()
+        {
+            if (amazonMusicProcess != null)
+            {
+                SetForegroundWindow(amazonMusicProcess.MainWindowHandle);
+                // Space
+                System.Windows.Forms.SendKeys.SendWait("{LEFT}");
+            }
+        }
+
         // 音量上げる
         static void VolumeUp()
         {
@@ -68,6 +102,50 @@ namespace windows11
                 SetForegroundWindow(volumerProcess.MainWindowHandle);
                 // Alt + F11
                 System.Windows.Forms.SendKeys.SendWait("%{F11}");
+            }
+        }
+
+        // Main Monitor の信号を DisplayPort に変更
+        static void DisplayPort()
+        {
+            if (screenInStyleProcess != null)
+            {
+                SetForegroundWindow(screenInStyleProcess.MainWindowHandle);
+                // Ctrl + Shift + 1
+                System.Windows.Forms.SendKeys.SendWait("^+1");
+            }
+        }
+
+        // Main Monitor の信号を HDMI1 に変更
+        static void HDMI1()
+        {
+            if (screenInStyleProcess != null)
+            {
+                SetForegroundWindow(screenInStyleProcess.MainWindowHandle);
+                // Ctrl + Shift + 2
+                System.Windows.Forms.SendKeys.SendWait("^+2");
+            }
+        }
+
+        // Main Monitor の信号を HDMI2 に変更
+        static void HDMI2()
+        {
+            if (screenInStyleProcess != null)
+            {
+                SetForegroundWindow(screenInStyleProcess.MainWindowHandle);
+                // Ctrl + Shift + 3
+                System.Windows.Forms.SendKeys.SendWait("^+3");
+            }
+        }
+
+        // Main Monitor の信号を USB Type-C に変更
+        static void TypeC()
+        {
+            if (screenInStyleProcess != null)
+            {
+                SetForegroundWindow(screenInStyleProcess.MainWindowHandle);
+                // Ctrl + Shift + 4
+                System.Windows.Forms.SendKeys.SendWait("^+4");
             }
         }
 
@@ -93,6 +171,18 @@ namespace windows11
                         serialPort.Write(packetBytes, 0, packetBytes.Length);
                         break;
 
+                    case "PLAY":
+                        Play();
+                        break;
+
+                    case "NEXT":
+                        NextMusic();
+                        break;
+
+                    case "PREV":
+                        PrevMusic();
+                        break;
+
                     case "VLUP":
                         VolumeUp();
                         break;
@@ -101,8 +191,24 @@ namespace windows11
                         VolumeDown();
                         break;
 
+                    case "DISP":
+                        DisplayPort();
+                        break;
+
+                    case "HMI1":
+                        HDMI1();
+                        break;
+
+                    case "HMI2":
+                        HDMI2();
+                        break;
+
+                    case "TYPC":
+                        TypeC();
+                        break;
+
                     default:
-                        Console.WriteLine("Invalid Command. So do nothing");
+                        Console.WriteLine("Unknown Command. So do nothing");
                         break;
                 }
             }
@@ -176,6 +282,12 @@ namespace windows11
                         Console.WriteLine("プロセス名: {0} ID: {1}", p.ProcessName, p.Id);
                         volumerProcess = p;
                     }
+                    if (p.ProcessName == "ScreenInStyle")
+                    {
+                        // プロセス名とIDを出力
+                        Console.WriteLine("プロセス名: {0} ID: {1}", p.ProcessName, p.Id);
+                        screenInStyleProcess = p;
+                    }
                 }
             }
 
@@ -204,15 +316,6 @@ namespace windows11
 
             timer.Stop();
             timer.Dispose();
-
-            /*
-            // Space Key を送り、Play/Pause する
-            if (amazonMusic != null)
-            {
-                SetForegroundWindow(amazonMusic.MainWindowHandle);
-                System.Windows.Forms.SendKeys.SendWait(" ");
-            }
-            */
 
             // CPU 使用率を取得
             /*
