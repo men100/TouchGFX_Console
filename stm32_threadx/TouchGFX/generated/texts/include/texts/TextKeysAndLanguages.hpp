@@ -12,6 +12,8 @@ enum LANGUAGES
 
 enum TEXTS
 {
+    T___SINGLEUSE_VPF3,
+    T___SINGLEUSE_RHLM,
     NUMBER_OF_TEXT_KEYS
 };
 

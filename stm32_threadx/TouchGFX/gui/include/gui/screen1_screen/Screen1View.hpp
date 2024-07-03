@@ -11,6 +11,9 @@ public:
     virtual ~Screen1View() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
+
+    virtual void volumeUp();
+    virtual void volumeDown();
 protected:
 };
 

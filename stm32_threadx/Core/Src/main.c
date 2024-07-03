@@ -96,8 +96,6 @@ int __io_putchar(uint8_t ch)
 {
 	return ITM_SendChar(ch);
 }
-int gUartReceived = 0;
-uint8_t buffer[256];
 /* USER CODE END 0 */
 
 /**
@@ -147,15 +145,6 @@ int main(void)
   /* Call PreOsInit function */
   MX_TouchGFX_PreOSInit();
   /* USER CODE BEGIN 2 */
-  printf("test\n");
-  HAL_UART_Receive_IT(&huart1, buffer, 1);
-  while (gUartReceived == 0)
-  {
-	  ;
-  }
-  HAL_UART_Transmit_IT(&huart1, buffer, 1);
-  gUartReceived = 0;
-
   /* USER CODE END 2 */
 
   MX_ThreadX_Init();
@@ -779,11 +768,6 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-	printf("HAL_UART_RxCpltCallback\n");
-	gUartReceived = 1;
-}
 /* USER CODE END 4 */
 
 /**

@@ -5,6 +5,14 @@
   </Languages>
   <Texts>
     <TextGroup Id="Group1" />
+    <TextGroup Id="Unsorted">
+      <Text Id="__SingleUse_VPF3" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">Volume-</Translation>
+      </Text>
+      <Text Id="__SingleUse_RHLM" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">Volume+</Translation>
+      </Text>
+    </TextGroup>
   </Texts>
   <Typographies>
     <Typography Id="Default" Font="verdana.ttf" Size="20" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />

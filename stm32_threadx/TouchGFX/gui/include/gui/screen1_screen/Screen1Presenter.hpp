@@ -27,6 +27,14 @@ public:
 
     virtual ~Screen1Presenter() {}
 
+    void volumeUp()
+    {
+    	model->volumeUp();
+    }
+    void volumeDown()
+    {
+    	model->volumeDown();
+    }
 private:
     Screen1Presenter();
 

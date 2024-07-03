@@ -3,8 +3,75 @@
     "Screens": [
       {
         "Name": "Screen1",
-        "Components": [],
-        "Interactions": []
+        "Components": [
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "volumeUpButton",
+            "X": 187,
+            "Width": 138,
+            "Height": 138,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_action.png",
+            "TextId": "__SingleUse_RHLM",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "alternate_theme\\presets\\button\\icon\\rounded\\medium_fill_action.json"
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "volumeDownButton",
+            "Width": 138,
+            "Height": 138,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_action.png",
+            "TextId": "__SingleUse_VPF3",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "alternate_theme\\presets\\button\\icon\\rounded\\medium_fill_action.json"
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "VolumeUp_Interaction",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "volumeUpButton"
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "volumeUp"
+            }
+          },
+          {
+            "InteractionName": "VolumeDown_Interaction",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "volumeDownButton"
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "volumeDown"
+            }
+          }
+        ]
       }
     ],
     "CustomContainerDefinitions": [],
