@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Management;
 using System.Timers;
-using System.Windows.Forms;
 using NAudio.CoreAudioApi;
 
 namespace windows11
@@ -11,11 +10,17 @@ namespace windows11
     internal class Program
     {
         static SerialPort? serialPort;
-        static byte volume = 0;
         static Process? amazonMusicProcess;
         static Process? volumerProcess;
         static Process? screenInStyleProcess;
+        static PerformanceCounter? processorPerformanceCounter;
+        static ManagementObject? memoryManagementObject;
+        static List<PerformanceCounter>? gpuCounters;
 
+        static byte systemVolume = 0;
+        static byte cpuUsage = 0;
+        static byte memoryUsage = 0;
+        static byte gpuUsage = 0;
 
         struct Packet
         {
@@ -23,6 +28,9 @@ namespace windows11
             public byte version;
             public byte result;
             public byte volume;
+            public byte cpuUsage;
+            public byte memoryUsage;
+            public byte gpuUsage;
         }
 
         // 構造体をbyte[]に変換
@@ -38,16 +46,84 @@ namespace windows11
             return arr;
         }
 
-        static void memory(System.Management.ManagementObject mo)
+        // 指定した桁数に丸める
+        public static decimal RoundToDecimalPlaces(decimal value, int decimalPlaces)
         {
-            decimal totalVisibleMemorySize = decimal.Parse(mo["TotalVisibleMemorySize"].ToString());
-            decimal freePhysicalMemory = decimal.Parse(mo["FreePhysicalMemory"].ToString());
+            decimal multiplier = (decimal)Math.Pow(10d, decimalPlaces);
+            return Math.Round(value * multiplier) / multiplier;
+        }
+
+        // システム全体の音量設定値を取得
+        static byte getSystemVolume()
+        {
+            // デフォルトの音声出力デバイスを取得
+            var enumerator = new MMDeviceEnumerator();
+            var device = enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Console);
+
+            // システムの音量設定値を0～1の範囲で取得し、小数点以下2桁に丸める
+            decimal masterVolumeLevelScalar = RoundToDecimalPlaces((decimal)device.AudioEndpointVolume.MasterVolumeLevelScalar, 2);
+
+            // 音量をパーセンテージ(0～100)に変換
+            return (byte)(masterVolumeLevelScalar * 100);
+        }
+
+        // CPU 使用率を取得
+        static byte getCpuUsage(PerformanceCounter? pc)
+        {
+            if (pc == null)
+            {
+                return 0;
+            }
+
+            return (byte)pc.NextValue();
+        }
+
+        // メモリ使用率を取得
+        static byte getMemoryUsage(ManagementObject? mo)
+        {
+            if (mo == null)
+            {
+                return 0;
+            }
+            decimal totalVisibleMemorySize;
+            {
+                totalVisibleMemorySize = decimal.TryParse(mo?.GetPropertyValue("TotalVisibleMemorySize")?.ToString(), out var parsed) ? parsed : 0;
+
+            }
+            decimal freePhysicalMemory;
+            {
+                freePhysicalMemory = decimal.TryParse(mo?.GetPropertyValue("FreePhysicalMemory")?.ToString(), out var parsed) ? parsed : 0;
+
+            }
             decimal usePhysicalMemory = totalVisibleMemorySize - freePhysicalMemory;
 
+            /*
             Console.WriteLine("usePhysicalMemory: {0:N0}KiB, {1:0.0}GiB", usePhysicalMemory, usePhysicalMemory / 1024 / 1024);
             Console.WriteLine("freePhysicalMemory: {0:N0}KiB, {1:0.0}GiB", freePhysicalMemory, freePhysicalMemory / 1024 / 1024);
             Console.WriteLine("totalVisibleMemorySize: {0:N0}KiB, {1:0.0}GiB", totalVisibleMemorySize, totalVisibleMemorySize / 1024 / 1024);
-            Console.WriteLine("usage: {0:0}%", usePhysicalMemory / totalVisibleMemorySize * 100);
+            Console.WriteLine("usage: {0:0}%", RoundToDecimalPlaces(usePhysicalMemory / totalVisibleMemorySize, 2) * 100);
+            */
+
+            // 小数点以下2桁に丸めたものを % に変換
+            return (byte)(RoundToDecimalPlaces(usePhysicalMemory / totalVisibleMemorySize, 2) * 100);
+        }
+
+        // GPU 使用率を取得
+        static byte getGpuUsage(List<PerformanceCounter>? li)
+        {
+            if (li == null)
+            {
+                return 0;
+            }
+
+            float result = 0.0f;
+            foreach (PerformanceCounter gpuCounter in li)
+            {
+                float tmpValue = gpuCounter.NextValue();
+                result += tmpValue;
+            }
+
+            return (byte)result;
         }
 
         // Play (or Pause)
@@ -157,10 +233,13 @@ namespace windows11
             Console.WriteLine("Received: " + data);
 
             Packet packet = new Packet();
-            packet.size = 4;
+            packet.size = (byte)Marshal.SizeOf(packet);
             packet.version = 0;
             packet.result = 0;
-            packet.volume = volume;
+            packet.volume = systemVolume;
+            packet.cpuUsage = cpuUsage;
+            packet.memoryUsage = memoryUsage;
+            packet.gpuUsage = gpuUsage;
 
             byte[] packetBytes = StructToBytes(packet);
             if (serialPort != null)
@@ -217,29 +296,41 @@ namespace windows11
         // タイマーイベントハンドラ
         private static void OnTimedEvent(Object? source, ElapsedEventArgs e)
         {
-            // 1秒ごとに実行したい処理をここに記述
-            Console.WriteLine("The Elapsed event was raised at {0:HH:mm:ss.fff}", e.SignalTime);
+            systemVolume = getSystemVolume();
+            cpuUsage = getCpuUsage(processorPerformanceCounter);
+            memoryUsage = getMemoryUsage(memoryManagementObject);
+            gpuUsage = getGpuUsage(gpuCounters);
 
-            // システム全体の音量設定値を取得
-            {
-                // デフォルトの音声出力デバイスを取得
-                var enumerator = new MMDeviceEnumerator();
-                var device = enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Console);
-
-                // システムの音量設定値を0～1の範囲で取得
-                float systemVolume = device.AudioEndpointVolume.MasterVolumeLevelScalar;
-
-                // 音量をパーセンテージ(0～100)に変換して表示
-                Console.WriteLine($"System volume: {systemVolume * 100:0}%");
-
-                volume = (byte)(systemVolume * 100);
-            }
+            Console.WriteLine($"[{e.SignalTime:HH:mm:ss.fff}]: volume={systemVolume:0}%, cpu={cpuUsage:0}%, memory={memoryUsage:0}%, gpu={gpuUsage:0}%");
         }
 
         [DllImport("user32.dll")]
         private static extern bool SetForegroundWindow(IntPtr hWnd);
         static void Main(string[] args)
         {
+            // カテゴリ名・カウンタ名・インスタンス名を指定してPerformanceCounterのインスタンスを作成
+            processorPerformanceCounter = new PerformanceCounter("Processor Information", "% Processor Utility", "_Total");
+
+            // WMIインスタンスを取得
+            using (ManagementClass mc = new System.Management.ManagementClass("Win32_OperatingSystem"))
+            using (ManagementObjectCollection ins = mc.GetInstances())
+            {
+                foreach (System.Management.ManagementObject mo in ins)
+                {
+                    memoryManagementObject = mo;
+                    break;
+                }
+            }
+
+            // GPU Engine の Performance Counter を取得
+            var category = new PerformanceCounterCategory("GPU Engine");
+            var counterNames = category.GetInstanceNames();
+            gpuCounters = counterNames
+                .Where(counterName => counterName.EndsWith("engtype_3D"))
+                .SelectMany(counterName => category.GetCounters(counterName))
+                .Where(counter => counter.CounterName.Equals("Utilization Percentage"))
+                .ToList();
+
             // 1秒間隔のタイマーを作成
             System.Timers.Timer timer = new System.Timers.Timer(1000);
             timer.Elapsed += OnTimedEvent;
@@ -251,8 +342,8 @@ namespace windows11
             ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PnPEntity WHERE Caption LIKE '%(COM%'");
             foreach (ManagementObject obj in searcher.Get())
             {
-                string caption = obj["Caption"].ToString().Split('(', ')')[1];
-                string description = obj["Description"].ToString();
+                string caption = obj?["Caption"]?.ToString()?.Split('(', ')')?.ElementAtOrDefault(1) ?? "";
+                string description = obj?["Description"]?.ToString() ?? "";
 
                 if (description == stLinkDescription)
                 {
@@ -316,70 +407,17 @@ namespace windows11
 
             timer.Stop();
             timer.Dispose();
-
-            // CPU 使用率を取得
-            /*
-            // カテゴリ名・カウンタ名・インスタンス名を指定してPerformanceCounterのインスタンスを作成
-            var pc = new PerformanceCounter("Processor Information", "% Processor Utility", "_Total");
-            for (; ; )
-            {
-                // カウンタの値を取得して、値を0.0～1.0の範囲にする
-                var percent = pc.NextValue() / 100.0f;
-
-                // パーセント値として表示
-                Console.WriteLine("{0,8:P2}", percent);
-
-                Thread.Sleep(1000);
-            }
-            */
-
-            // メモリ使用量を取得
-            /*
-            // WMIインスタンスを取得
-            using (ManagementClass mc = new System.Management.ManagementClass("Win32_OperatingSystem"))
-            using (ManagementObjectCollection ins = mc.GetInstances())
-            {
-                foreach (System.Management.ManagementObject mo in ins)
-                {
-                    memory(mo); // ローカルメソッド呼び出し
-                    mo.Dispose();
-                    break;
-                }
-            }
-            */
-
-            // GPU 使用率を取得
-            /*
-            var category = new PerformanceCounterCategory("GPU Engine");
-            var counterNames = category.GetInstanceNames();
-            var gpuCounters = counterNames
-                .Where(counterName => counterName.EndsWith("engtype_3D"))
-                .SelectMany(counterName => category.GetCounters(counterName))
-                .Where(counter => counter.CounterName.Equals("Utilization Percentage"))
-                .ToList();
-
-            for (; ; )
-            {
-                float result = 0.0f;
-                foreach (PerformanceCounter gpuCounter in gpuCounters)
-                {
-                    float tmpValue = gpuCounter.NextValue();
-                    result += tmpValue;
-                }
-                Console.WriteLine($"GPU Usage: {result:0}%");
-
-                Thread.Sleep(1000);
-            }
-            */
-
+            memoryManagementObject?.Dispose();
         }
     }
 
     // プロセス名でソート ... for Array.Sort
     public class ProcComparator : IComparer<Process>
     {
-        public int Compare(Process p, Process q)
+        public int Compare(Process? p, Process? q)
         {
+            ArgumentNullException.ThrowIfNull(p);
+            ArgumentNullException.ThrowIfNull(q);
             return p.ProcessName.CompareTo(q.ProcessName);
         }
     }
