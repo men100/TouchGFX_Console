@@ -1,7 +1,7 @@
 #include <gui/screen1_screen/Screen1View.hpp>
 #include <stdio.h>
 
-Screen1View::Screen1View()
+Screen1View::Screen1View() : tickCounter(0)
 {
 
 }
@@ -14,6 +14,19 @@ void Screen1View::setupScreen()
 void Screen1View::tearDownScreen()
 {
     Screen1ViewBase::tearDownScreen();
+}
+
+void Screen1View::handleTickEvent()
+{
+	touchgfx::Unicode::snprintf(volumeTextAreaBuffer, VOLUMETEXTAREA_SIZE, "%d", presenter->getSystemVolume());
+	touchgfx::Unicode::snprintf(cpuTextAreaBuffer, CPUTEXTAREA_SIZE, "%d", presenter->getCpuUsage());
+	touchgfx::Unicode::snprintf(memoryTextAreaBuffer, MEMORYTEXTAREA_SIZE, "%d", presenter->getMemoryUsage());
+	touchgfx::Unicode::snprintf(gpuTextAreaBuffer, GPUTEXTAREA_SIZE, "%d", presenter->getGpuUsage());
+
+	volumeTextArea.invalidate();
+	cpuTextArea.invalidate();
+	memoryTextArea.invalidate();
+	gpuTextArea.invalidate();
 }
 
 void Screen1View::play()

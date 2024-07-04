@@ -63,6 +63,22 @@ public:
     {
     	model->typec();
     }
+    uint8_t getSystemVolume()
+    {
+    	return model->getSystemVolume();
+    }
+    uint8_t getCpuUsage()
+    {
+    	return model->getCpuUsage();
+    }
+    uint8_t getMemoryUsage()
+    {
+    	return model->getMemoryUsage();
+    }
+    uint8_t getGpuUsage()
+    {
+    	return model->getGpuUsage();
+    }
 private:
     Screen1Presenter();
 

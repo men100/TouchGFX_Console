@@ -6,11 +6,41 @@
   <Texts>
     <TextGroup Id="Group1" />
     <TextGroup Id="Unsorted">
-      <Text Id="__SingleUse_82L4" Alignment="Center" TypographyId="Default">
-        <Translation Language="GB">USB-C</Translation>
+      <Text Id="__SingleUse_BAJR" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">CPU&#10;Usage</Translation>
       </Text>
-      <Text Id="__SingleUse_RC2N" Alignment="Center" TypographyId="Default">
-        <Translation Language="GB">HDMI2</Translation>
+      <Text Id="__SingleUse_RA6S" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">Memory&#10;Usage</Translation>
+      </Text>
+      <Text Id="__SingleUse_X8D8" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">000</Translation>
+      </Text>
+      <Text Id="__SingleUse_2NUH" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;%</Translation>
+      </Text>
+      <Text Id="__SingleUse_5BDZ" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">GPU&#10;Usage</Translation>
+      </Text>
+      <Text Id="__SingleUse_C3ZQ" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">000</Translation>
+      </Text>
+      <Text Id="__SingleUse_YMYI" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;%</Translation>
+      </Text>
+      <Text Id="__SingleUse_ZQHL" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">000</Translation>
+      </Text>
+      <Text Id="__SingleUse_WR48" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;%</Translation>
+      </Text>
+      <Text Id="__SingleUse_QXAV" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">000</Translation>
+      </Text>
+      <Text Id="__SingleUse_0VKQ" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;%</Translation>
+      </Text>
+      <Text Id="__SingleUse_POGE" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Volume</Translation>
       </Text>
       <Text Id="__SingleUse_JU3E" Alignment="Center" TypographyId="Default">
         <Translation Language="GB">HDMI1</Translation>
@@ -36,7 +66,7 @@
     </TextGroup>
   </Texts>
   <Typographies>
-    <Typography Id="Default" Font="verdana.ttf" Size="20" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
+    <Typography Id="Default" Font="verdana.ttf" Size="20" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacterRanges="0-9" />
     <Typography Id="Large" Font="verdana.ttf" Size="40" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
     <Typography Id="Small" Font="verdana.ttf" Size="10" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
   </Typographies>

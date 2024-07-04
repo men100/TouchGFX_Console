@@ -5,9 +5,35 @@
         "Name": "Screen1",
         "Components": [
           {
+            "Type": "Box",
+            "Name": "volumeBox",
+            "X": 485,
+            "Y": 19,
+            "Width": 138,
+            "Height": 138,
+            "Color": {
+              "Red": 28,
+              "Green": 133,
+              "Blue": 28
+            }
+          },
+          {
+            "Type": "Box",
+            "Name": "cpuBox",
+            "X": 15,
+            "Y": 18,
+            "Width": 138,
+            "Height": 138,
+            "Color": {
+              "Red": 28,
+              "Green": 133,
+              "Blue": 28
+            }
+          },
+          {
             "Type": "ButtonWithLabel",
             "Name": "volumeUpButton",
-            "X": 639,
+            "X": 485,
             "Y": 171,
             "Width": 138,
             "Height": 138,
@@ -31,7 +57,7 @@
             "Type": "ButtonWithLabel",
             "Name": "playButton",
             "X": 172,
-            "Y": 171,
+            "Y": 322,
             "Width": 138,
             "Height": 138,
             "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
@@ -53,8 +79,8 @@
           {
             "Type": "ButtonWithLabel",
             "Name": "nextButton",
-            "X": 325,
-            "Y": 171,
+            "X": 332,
+            "Y": 322,
             "Width": 138,
             "Height": 138,
             "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
@@ -76,8 +102,8 @@
           {
             "Type": "ButtonWithLabel",
             "Name": "prevButton",
-            "X": 19,
-            "Y": 171,
+            "X": 14,
+            "Y": 322,
             "Width": 138,
             "Height": 138,
             "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
@@ -99,8 +125,8 @@
           {
             "Type": "ButtonWithLabel",
             "Name": "displayportButton",
-            "X": 19,
-            "Y": 322,
+            "X": 15,
+            "Y": 171,
             "Width": 138,
             "Height": 138,
             "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
@@ -122,8 +148,8 @@
           {
             "Type": "ButtonWithLabel",
             "Name": "hdmi1Button",
-            "X": 172,
-            "Y": 322,
+            "X": 173,
+            "Y": 171,
             "Width": 138,
             "Height": 138,
             "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
@@ -144,55 +170,9 @@
           },
           {
             "Type": "ButtonWithLabel",
-            "Name": "hdmi2Button",
-            "X": 325,
-            "Y": 322,
-            "Width": 138,
-            "Height": 138,
-            "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
-            "Released": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_active.png",
-            "TextId": "__SingleUse_RC2N",
-            "ReleasedColor": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "PressedColor": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "TextRotation": "0",
-            "Preset": "alternate_theme\\presets\\button\\icon\\rounded\\medium_fill_active.json"
-          },
-          {
-            "Type": "ButtonWithLabel",
-            "Name": "typecButton",
-            "X": 481,
-            "Y": 322,
-            "Width": 138,
-            "Height": 138,
-            "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
-            "Released": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_active.png",
-            "TextId": "__SingleUse_82L4",
-            "ReleasedColor": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "PressedColor": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "TextRotation": "0",
-            "Preset": "alternate_theme\\presets\\button\\icon\\rounded\\medium_fill_active.json"
-          },
-          {
-            "Type": "ButtonWithLabel",
             "Name": "volumeDownButton",
-            "X": 481,
-            "Y": 171,
+            "X": 485,
+            "Y": 323,
             "Width": 138,
             "Height": 138,
             "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
@@ -210,6 +190,180 @@
             },
             "TextRotation": "0",
             "Preset": "alternate_theme\\presets\\button\\icon\\rounded\\medium_fill_action.json"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "volumeLabelTextArea",
+            "X": 517,
+            "Y": 64,
+            "Width": 74,
+            "Height": 24,
+            "TextId": "__SingleUse_POGE",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "cpuLabelTextArea",
+            "X": 54,
+            "Y": 39,
+            "Width": 61,
+            "Height": 48,
+            "TextId": "__SingleUse_BAJR",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "volumeTextArea",
+            "X": 524,
+            "Y": 98,
+            "Width": 61,
+            "Height": 24,
+            "TextId": "__SingleUse_0VKQ",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true,
+            "Wildcard1": {
+              "TextId": "__SingleUse_QXAV",
+              "UseBuffer": true,
+              "BufferSize": 10
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "cpuTextArea",
+            "X": 54,
+            "Y": 109,
+            "Width": 61,
+            "Height": 24,
+            "TextId": "__SingleUse_WR48",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true,
+            "Wildcard1": {
+              "TextId": "__SingleUse_ZQHL",
+              "UseBuffer": true,
+              "BufferSize": 10
+            }
+          },
+          {
+            "Type": "Box",
+            "Name": "gpuBox",
+            "X": 332,
+            "Y": 18,
+            "Width": 138,
+            "Height": 138,
+            "Color": {
+              "Red": 28,
+              "Green": 133,
+              "Blue": 28
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "gpuLabelTextArea",
+            "X": 370,
+            "Y": 39,
+            "Width": 61,
+            "Height": 48,
+            "TextId": "__SingleUse_5BDZ",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "gpuTextArea",
+            "X": 370,
+            "Y": 109,
+            "Width": 61,
+            "Height": 24,
+            "TextId": "__SingleUse_YMYI",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true,
+            "Wildcard1": {
+              "TextId": "__SingleUse_C3ZQ",
+              "UseBuffer": true,
+              "BufferSize": 10
+            }
+          },
+          {
+            "Type": "Box",
+            "Name": "memoryBox",
+            "X": 173,
+            "Y": 18,
+            "Width": 138,
+            "Height": 138,
+            "Color": {
+              "Red": 28,
+              "Green": 133,
+              "Blue": 28
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "memoryLabelTextArea",
+            "X": 196,
+            "Y": 39,
+            "Width": 92,
+            "Height": 48,
+            "TextId": "__SingleUse_RA6S",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "memoryTextArea",
+            "X": 212,
+            "Y": 109,
+            "Width": 61,
+            "Height": 24,
+            "TextId": "__SingleUse_2NUH",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true,
+            "Wildcard1": {
+              "TextId": "__SingleUse_X8D8",
+              "UseBuffer": true,
+              "BufferSize": 10
+            }
           }
         ],
         "Interactions": [
@@ -288,28 +442,6 @@
             "Action": {
               "Type": "ActionCustom",
               "FunctionName": "hdmi1"
-            }
-          },
-          {
-            "InteractionName": "HDMI2Button_Interaction",
-            "Trigger": {
-              "Type": "TriggerClicked",
-              "TriggerComponent": "hdmi2Button"
-            },
-            "Action": {
-              "Type": "ActionCustom",
-              "FunctionName": "hdmi2"
-            }
-          },
-          {
-            "InteractionName": "TypeCButton_Interaction",
-            "Trigger": {
-              "Type": "TriggerClicked",
-              "TriggerComponent": "typecButton"
-            },
-            "Action": {
-              "Type": "ActionCustom",
-              "FunctionName": "typec"
             }
           }
         ]

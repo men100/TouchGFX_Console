@@ -17,6 +17,11 @@ public:
 
     void tick();
 
+    uint8_t getSystemVolume() { return systemVolume; }
+    uint8_t getCpuUsage() { return cpuUsage; }
+    uint8_t getMemoryUsage() { return memoryUsage; }
+    uint8_t getGpuUsage() { return gpuUsage; }
+
     void play();
     void nextMusic();
     void prevMusic();
@@ -29,7 +34,12 @@ public:
     void typec();
 protected:
     ModelListener* modelListener;
+private:
     int16_t tickCounter;
+    uint8_t systemVolume;
+    uint8_t cpuUsage;
+    uint8_t memoryUsage;
+    uint8_t gpuUsage;
 };
 
 #endif // MODEL_HPP

@@ -22,7 +22,11 @@ public:
     virtual void hdmi1();
     virtual void hdmi2();
     virtual void typec();
+
+    virtual void handleTickEvent();
 protected:
+private:
+    int16_t tickCounter;
 };
 
 #endif // SCREEN1VIEW_HPP

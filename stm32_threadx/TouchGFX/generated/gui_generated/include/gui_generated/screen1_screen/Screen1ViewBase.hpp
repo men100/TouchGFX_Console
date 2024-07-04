@@ -9,6 +9,8 @@
 #include <gui/screen1_screen/Screen1Presenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
 #include <touchgfx/widgets/ButtonWithLabel.hpp>
+#include <touchgfx/widgets/TextArea.hpp>
+#include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 
 class Screen1ViewBase : public touchgfx::View<Screen1Presenter>
 {
@@ -48,14 +50,6 @@ public:
     {
         // Override and implement this function in Screen1
     }
-    virtual void hdmi2()
-    {
-        // Override and implement this function in Screen1
-    }
-    virtual void typec()
-    {
-        // Override and implement this function in Screen1
-    }
 
 protected:
     FrontendApplication& application() {
@@ -66,15 +60,37 @@ protected:
      * Member Declarations
      */
     touchgfx::Box __background;
+    touchgfx::Box volumeBox;
+    touchgfx::Box cpuBox;
     touchgfx::ButtonWithLabel volumeUpButton;
     touchgfx::ButtonWithLabel playButton;
     touchgfx::ButtonWithLabel nextButton;
     touchgfx::ButtonWithLabel prevButton;
     touchgfx::ButtonWithLabel displayportButton;
     touchgfx::ButtonWithLabel hdmi1Button;
-    touchgfx::ButtonWithLabel hdmi2Button;
-    touchgfx::ButtonWithLabel typecButton;
     touchgfx::ButtonWithLabel volumeDownButton;
+    touchgfx::TextArea volumeLabelTextArea;
+    touchgfx::TextArea cpuLabelTextArea;
+    touchgfx::TextAreaWithOneWildcard volumeTextArea;
+    touchgfx::TextAreaWithOneWildcard cpuTextArea;
+    touchgfx::Box gpuBox;
+    touchgfx::TextArea gpuLabelTextArea;
+    touchgfx::TextAreaWithOneWildcard gpuTextArea;
+    touchgfx::Box memoryBox;
+    touchgfx::TextArea memoryLabelTextArea;
+    touchgfx::TextAreaWithOneWildcard memoryTextArea;
+
+    /*
+     * Wildcard Buffers
+     */
+    static const uint16_t VOLUMETEXTAREA_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar volumeTextAreaBuffer[VOLUMETEXTAREA_SIZE];
+    static const uint16_t CPUTEXTAREA_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar cpuTextAreaBuffer[CPUTEXTAREA_SIZE];
+    static const uint16_t GPUTEXTAREA_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar gpuTextAreaBuffer[GPUTEXTAREA_SIZE];
+    static const uint16_t MEMORYTEXTAREA_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar memoryTextAreaBuffer[MEMORYTEXTAREA_SIZE];
 
 private:
 
