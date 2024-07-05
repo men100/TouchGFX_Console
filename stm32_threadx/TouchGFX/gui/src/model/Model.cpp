@@ -21,6 +21,7 @@ typedef struct Packet {
 
 int gUartReceived = 0;
 int gIsAlreadySend = 0;
+int gIsGetSystemVolumeFirst = 0;
 
 uint8_t buffer[256];
 Packet packet;
@@ -45,11 +46,23 @@ void Model::tick()
 	printf("size:%d, version:%d, result:%d, volume:%d, cpu:%d, memory:%d, gpu:%d\n",
 			packet.size, packet.version, packet.result, packet.volume,
 			packet.cpuUsage, packet.memoryUsage, packet.gpuUsage);
-	systemVolume = packet.volume;
 	cpuUsage = packet.cpuUsage;
+	if (cpuUsage > 100) {
+		cpuUsage = 100;
+	}
 	memoryUsage = packet.memoryUsage;
+	if (memoryUsage > 100) {
+		memoryUsage = 100;
+	}
 	gpuUsage = packet.gpuUsage;
-    gUartReceived = 0;
+	if (gpuUsage > 100) {
+		gpuUsage = 100;
+	}
+	if (!gIsGetSystemVolumeFirst) {
+		systemVolume = packet.volume;
+		gIsGetSystemVolumeFirst = 1;
+	}
+	gUartReceived = 0;
     HAL_UART_Receive_IT(&huart1, buffer, RECV_PACKET_SIZE);
   } else if (tickCounter > 30) {
 	if (gIsAlreadySend) {
