@@ -331,9 +331,9 @@
           {
             "Type": "TextArea",
             "Name": "memoryLabelTextArea",
-            "X": 196,
+            "X": 202,
             "Y": 39,
-            "Width": 92,
+            "Width": 81,
             "Height": 48,
             "TextId": "__SingleUse_RA6S",
             "TextRotation": "0",
@@ -509,6 +509,6 @@
       "Video"
     ]
   },
-  "Version": "4.24.0",
-  "CreatedBy": "4.24.0"
+  "Version": "4.23.0",
+  "CreatedBy": "4.23.0"
 }

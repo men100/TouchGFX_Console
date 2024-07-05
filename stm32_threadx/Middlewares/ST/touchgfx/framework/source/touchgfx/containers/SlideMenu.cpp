@@ -1,8 +1,8 @@
 /******************************************************************************
-* Copyright (c) 2018(-2024) STMicroelectronics.
+* Copyright (c) 2018(-2023) STMicroelectronics.
 * All rights reserved.
 *
-* This file is part of the TouchGFX 4.24.0 distribution.
+* This file is part of the TouchGFX 4.23.0 distribution.
 *
 * This software is licensed under terms that can be found in the LICENSE file in
 * the root directory of this software component.
@@ -297,10 +297,6 @@ void SlideMenu::handleTickEvent()
         if (expandedStateTimer > expandedStateTimeout)
         {
             animateToState(COLLAPSED);
-            if ((stateChangedCallback != 0) && stateChangedCallback->isValid())
-            {
-                stateChangedCallback->execute(*this);
-            }
         }
     }
 }

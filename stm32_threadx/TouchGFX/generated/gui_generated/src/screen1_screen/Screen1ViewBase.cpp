@@ -130,7 +130,7 @@ Screen1ViewBase::Screen1ViewBase() :
     memoryBox.setColor(touchgfx::Color::getColorFromRGB(28, 133, 28));
     add(memoryBox);
 
-    memoryLabelTextArea.setXY(196, 39);
+    memoryLabelTextArea.setXY(202, 39);
     memoryLabelTextArea.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
     memoryLabelTextArea.setLinespacing(0);
     memoryLabelTextArea.setTypedText(touchgfx::TypedText(T___SINGLEUSE_RA6S));

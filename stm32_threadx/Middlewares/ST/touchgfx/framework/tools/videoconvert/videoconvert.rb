@@ -1,7 +1,7 @@
-# Copyright (c) 2018(-2024) STMicroelectronics.
+# Copyright (c) 2018(-2023) STMicroelectronics.
 # All rights reserved.
 #
-# This file is part of the TouchGFX 4.24.0 distribution.
+# This file is part of the TouchGFX 4.23.0 distribution.
 #
 # This software is licensed under terms that can be found in the LICENSE file in
 # the root directory of this software component.
@@ -152,7 +152,6 @@ BANNER
     toolchain_is_keil = false # Assume it is not Keil
     dual_core = false # Assume it is not dual core
     context_enabled = false # Assume not context enabled
-    trust_zone = false # Assume not trust zone
     if project_file
       # From cubemx_project_selector.rb in touchgfx-cli:
       content = File.read(project_file, :encoding=>'utf-8')
@@ -174,16 +173,6 @@ BANNER
       context_enabled = content.match(/Mcu.ThirdParty\d+_Instance=STMicroelectronics.X-CUBE-TOUCHGFX.\d+.\d+.\d+_App/)
       if context_enabled then
         touchgfx_folder_path = "../../Appli/TouchGFX" 
-      end
-
-      # Determine if trust zone (non secure only) project
-      # From cubemx_project_selector.rb in touchgfx-cli:
-      content = File.read(project_file, :encoding=>'utf-8')
-      trust_zone = content.match(/Mcu.ThirdParty\d+_Instance=STMicroelectronics.X-CUBE-TOUCHGFX.\d+.\d+.\d+_M\d+NS/)
-      if trust_zone
-        # match expression is for dual is also true for trust zone, so we must disable dual core
-        dual_core = false
-        touchgfx_folder_path = "../NonSecure/TouchGFX" 
       end
     end
     

@@ -1,8 +1,8 @@
 /******************************************************************************
-* Copyright (c) 2018(-2024) STMicroelectronics.
+* Copyright (c) 2018(-2023) STMicroelectronics.
 * All rights reserved.
 *
-* This file is part of the TouchGFX 4.24.0 distribution.
+* This file is part of the TouchGFX 4.23.0 distribution.
 *
 * This software is licensed under terms that can be found in the LICENSE file in
 * the root directory of this software component.
@@ -101,7 +101,6 @@ void ScrollWheelBase::handleClickEvent(const ClickEvent& event)
     const int32_t offset = getOffset();
     if (event.getType() == ClickEvent::PRESSED)
     {
-        isPressed = true;
         xClick = event.getX();
         yClick = event.getY();
         initialSwipeOffset = offset;
@@ -140,14 +139,11 @@ void ScrollWheelBase::handleClickEvent(const ClickEvent& event)
         {
             itemSelectedCallback->execute(getSelectedItem());
         }
-        isPressed = false;
     }
-    isScrolling = false;
 }
 
 void ScrollWheelBase::handleDragEvent(const DragEvent& event)
 {
-    isScrolling = true;
     currentAnimationState = ANIMATING_DRAG;
     int newOffset = getOffset() + (getHorizontal() ? event.getDeltaX() : event.getDeltaY()) * dragAcceleration / 10;
     newOffset = keepOffsetInsideLimits(newOffset, overshootPercentage);
@@ -158,7 +154,6 @@ void ScrollWheelBase::handleGestureEvent(const GestureEvent& event)
 {
     if (event.getType() == (getHorizontal() ? GestureEvent::SWIPE_HORIZONTAL : GestureEvent::SWIPE_VERTICAL))
     {
-        isScrolling = true;
         int32_t newOffset = getOffset() + event.getVelocity() * swipeAcceleration / 10;
         if (maxSwipeItems > 0)
         {
