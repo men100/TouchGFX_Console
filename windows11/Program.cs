@@ -46,13 +46,6 @@ namespace windows11
             return arr;
         }
 
-        // 指定した桁数に丸める
-        public static decimal RoundToDecimalPlaces(decimal value, int decimalPlaces)
-        {
-            decimal multiplier = (decimal)Math.Pow(10d, decimalPlaces);
-            return Math.Round(value * multiplier) / multiplier;
-        }
-
         // システム全体の音量設定値を取得
         static byte getSystemVolume()
         {
@@ -60,11 +53,17 @@ namespace windows11
             var enumerator = new MMDeviceEnumerator();
             var device = enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Console);
 
-            // システムの音量設定値を0～1の範囲で取得し、小数点以下2桁に丸める
-            decimal masterVolumeLevelScalar = RoundToDecimalPlaces((decimal)device.AudioEndpointVolume.MasterVolumeLevelScalar, 2);
+            // システムの音量設定値を0～1の範囲で取得し、% 変換
+            decimal masterVolumeLevelScalar = (decimal)device.AudioEndpointVolume.MasterVolumeLevelScalar * 100;
 
-            // 音量をパーセンテージ(0～100)に変換
-            return (byte)(masterVolumeLevelScalar * 100);
+            // 整数値に丸める
+            byte systemVolume = (byte)Math.Round(masterVolumeLevelScalar);
+            if (systemVolume > 100)
+            {
+                systemVolume = 100;
+            }
+
+            return systemVolume;
         }
 
         // CPU 使用率を取得
@@ -75,7 +74,13 @@ namespace windows11
                 return 0;
             }
 
-            return (byte)pc.NextValue();
+            byte cpuUsage = (byte)Math.Round(pc.NextValue());
+            if (cpuUsage > 100)
+            {
+                cpuUsage = 100;
+            }
+
+            return cpuUsage;
         }
 
         // メモリ使用率を取得
@@ -101,11 +106,20 @@ namespace windows11
             Console.WriteLine("usePhysicalMemory: {0:N0}KiB, {1:0.0}GiB", usePhysicalMemory, usePhysicalMemory / 1024 / 1024);
             Console.WriteLine("freePhysicalMemory: {0:N0}KiB, {1:0.0}GiB", freePhysicalMemory, freePhysicalMemory / 1024 / 1024);
             Console.WriteLine("totalVisibleMemorySize: {0:N0}KiB, {1:0.0}GiB", totalVisibleMemorySize, totalVisibleMemorySize / 1024 / 1024);
-            Console.WriteLine("usage: {0:0}%", RoundToDecimalPlaces(usePhysicalMemory / totalVisibleMemorySize, 2) * 100);
+            Console.WriteLine("usage: {0:0}%", Math.Round(usePhysicalMemory / totalVisibleMemorySize * 100);
             */
 
-            // 小数点以下2桁に丸めたものを % に変換
-            return (byte)(RoundToDecimalPlaces(usePhysicalMemory / totalVisibleMemorySize, 2) * 100);
+            // メモリ使用率を0～1の範囲で取得し、% 変換
+            decimal memoryUsageDecimal = usePhysicalMemory / totalVisibleMemorySize * 100;
+
+            // それを丸める
+            byte memoryUsage = (byte)Math.Round(memoryUsageDecimal);
+            if (memoryUsage > 100)
+            {
+                memoryUsage = 100;
+            }
+
+            return memoryUsage;
         }
 
         // GPU 使用率を取得
@@ -123,7 +137,14 @@ namespace windows11
                 result += tmpValue;
             }
 
-            return (byte)result;
+            // 丸める
+            byte gpuUsage = (byte)Math.Round(result);
+            if (gpuUsage > 100)
+            {
+                gpuUsage = 100;
+            }
+
+            return gpuUsage;
         }
 
         // Play (or Pause)
@@ -231,23 +252,14 @@ namespace windows11
             SerialPort sp = (SerialPort)sender;
             string data = sp.ReadExisting();  // 受信データを読み込む
             Console.WriteLine("Received: " + data);
+            bool isNeedReply = false;
 
-            Packet packet = new Packet();
-            packet.size = (byte)Marshal.SizeOf(packet);
-            packet.version = 0;
-            packet.result = 0;
-            packet.volume = systemVolume;
-            packet.cpuUsage = cpuUsage;
-            packet.memoryUsage = memoryUsage;
-            packet.gpuUsage = gpuUsage;
-
-            byte[] packetBytes = StructToBytes(packet);
             if (serialPort != null)
             {
                 switch (data)
                 {
                     case "INFO":
-                        serialPort.Write(packetBytes, 0, packetBytes.Length);
+                        isNeedReply = true;
                         break;
 
                     case "PLAY":
@@ -264,10 +276,14 @@ namespace windows11
 
                     case "VLUP":
                         VolumeUp();
+                        systemVolume = getSystemVolume();
+                        isNeedReply = true;
                         break;
 
                     case "VLDN":
                         VolumeDown();
+                        systemVolume = getSystemVolume();
+                        isNeedReply = true;
                         break;
 
                     case "DISP":
@@ -289,6 +305,21 @@ namespace windows11
                     default:
                         Console.WriteLine("Unknown Command. So do nothing");
                         break;
+                }
+
+                if (isNeedReply)
+                {
+                    Packet packet = new Packet();
+                    packet.size = (byte)Marshal.SizeOf(packet);
+                    packet.version = 0;
+                    packet.result = 0;
+                    packet.volume = systemVolume;
+                    packet.cpuUsage = cpuUsage;
+                    packet.memoryUsage = memoryUsage;
+                    packet.gpuUsage = gpuUsage;
+
+                    byte[] packetBytes = StructToBytes(packet);
+                    serialPort.Write(packetBytes, 0, packetBytes.Length);
                 }
             }
         }
