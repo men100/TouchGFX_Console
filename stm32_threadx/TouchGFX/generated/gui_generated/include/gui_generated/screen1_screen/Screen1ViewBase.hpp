@@ -11,6 +11,7 @@
 #include <touchgfx/widgets/ButtonWithLabel.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
+#include <touchgfx/containers/progress_indicators/BoxProgress.hpp>
 
 class Screen1ViewBase : public touchgfx::View<Screen1Presenter>
 {
@@ -79,6 +80,7 @@ protected:
     touchgfx::Box memoryBox;
     touchgfx::TextArea memoryLabelTextArea;
     touchgfx::TextAreaWithOneWildcard memoryTextArea;
+    touchgfx::BoxProgress displayProgress;
 
     /*
      * Wildcard Buffers

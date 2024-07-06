@@ -9,6 +9,7 @@ Screen1View::Screen1View() : tickCounter(0)
 void Screen1View::setupScreen()
 {
     Screen1ViewBase::setupScreen();
+    presenter->setCurrentScreenIndex(0);
 }
 
 void Screen1View::tearDownScreen()
@@ -27,6 +28,21 @@ void Screen1View::handleTickEvent()
 	cpuTextArea.invalidate();
 	memoryTextArea.invalidate();
 	gpuTextArea.invalidate();
+
+	if (presenter->getBackLightState()) {
+		int rest = BackLightOffTick - tickCounter;
+
+		if (rest > 0) {
+			int displayProgressValue = rest / 18;
+			displayProgress.setValue(displayProgressValue);
+			tickCounter++;
+		} else {
+			presenter->setBackLightState(false);
+		}
+	} else {
+		displayProgress.setValue(100);
+		tickCounter = 0;
+	}
 }
 
 void Screen1View::play()

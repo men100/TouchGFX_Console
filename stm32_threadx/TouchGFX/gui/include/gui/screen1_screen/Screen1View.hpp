@@ -7,6 +7,8 @@
 class Screen1View : public Screen1ViewBase
 {
 public:
+	const int BackLightOffTick = 1800; // バックライト消灯までの tick 数 (30秒)
+
     Screen1View();
     virtual ~Screen1View() {}
     virtual void setupScreen();

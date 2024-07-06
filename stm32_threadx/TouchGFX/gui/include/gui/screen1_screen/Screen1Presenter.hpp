@@ -27,6 +27,19 @@ public:
 
     virtual ~Screen1Presenter() {}
 
+    void setCurrentScreenIndex(uint8_t index)
+    {
+    	model->setCurrentScreenIndex(index);
+    }
+    void setBackLightState(bool isOn)
+    {
+    	model->setBackLightState(isOn);
+    }
+    bool getBackLightState()
+    {
+    	return model->getBackLightState();
+    }
+
     void play()
     {
     	model->play();

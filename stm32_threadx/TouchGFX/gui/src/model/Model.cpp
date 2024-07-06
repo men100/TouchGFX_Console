@@ -25,13 +25,18 @@ int gIsAlreadySend = 0;
 uint8_t buffer[256];
 Packet packet;
 
+int isButtonTriggered = 0;
+int isButtonReleased = 1;
+
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
   gUartReceived = 1;
 }
 
 Model::Model() : modelListener(0),
-		tickCounter(0), systemVolume(0), cpuUsage(0), memoryUsage(0), gpuUsage(0)
+		currentScreenIndex(0), tickCounter(0),
+		isBackLightOn(true),
+		systemVolume(0), cpuUsage(0), memoryUsage(0), gpuUsage(0)
 {
   printf("Model Constructor\n");
   HAL_UART_Receive_IT(&huart1, buffer, RECV_PACKET_SIZE);
@@ -40,6 +45,23 @@ Model::Model() : modelListener(0),
 void Model::tick()
 {
   tickCounter++;
+
+  if (HAL_GPIO_ReadPin(USER_BUTTON_GPIO_Port, USER_BUTTON_Pin) == GPIO_PIN_SET) {
+	  if (isButtonReleased) {
+		  isButtonTriggered = 1;
+		  isButtonReleased = 0;
+		  printf("USERBUTTON is triggered\n");
+
+		  setBackLightState(isBackLightOn ? false : true);
+	  }
+  } else {
+	  if (isButtonTriggered) {
+		  isButtonTriggered = 0;
+		  isButtonReleased = 1;
+		  printf("USERBUTTON is released\n");
+	  }
+  }
+
   if (gUartReceived) {
 	memcpy(&packet, buffer, RECV_PACKET_SIZE);
 	printf("size:%d, version:%d, result:%d, volume:%d, cpu:%d, memory:%d, gpu:%d\n",
@@ -59,6 +81,20 @@ void Model::tick()
 	}
     tickCounter = 0;
   }
+}
+
+void Model::setBackLightState(bool isOn)
+{
+	if (isBackLightOn == isOn)
+	{
+		return;
+	}
+	HAL_GPIO_WritePin(LCD_BL_CTRL_GPIO_Port, LCD_BL_CTRL_Pin, isOn ? GPIO_PIN_SET : GPIO_PIN_RESET);
+
+	// Active Low (BL 点灯時は LED OFF)
+	HAL_GPIO_WritePin(USER_LD3_GREEN_GPIO_Port, USER_LD3_GREEN_Pin, isOn ? GPIO_PIN_SET : GPIO_PIN_RESET);
+
+	isBackLightOn = isOn;
 }
 
 void Model::play()
