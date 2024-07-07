@@ -14,7 +14,6 @@ namespace windows11
         static Process? volumerProcess;
         static Process? screenInStyleProcess;
         static PerformanceCounter? processorPerformanceCounter;
-        static ManagementObject? memoryManagementObject;
         static List<PerformanceCounter>? gpuCounters;
 
         static byte systemVolume = 0;
@@ -84,42 +83,48 @@ namespace windows11
         }
 
         // メモリ使用率を取得
-        static byte getMemoryUsage(ManagementObject? mo)
+        static byte getMemoryUsage()
         {
-            if (mo == null)
+            // WMIインスタンスを取得 (途中で追従できなくなるので、毎回インスタンスを取るよう変更)
+            using (ManagementClass mc = new System.Management.ManagementClass("Win32_OperatingSystem"))
+            using (ManagementObjectCollection ins = mc.GetInstances())
             {
-                return 0;
+                foreach (System.Management.ManagementObject mo in ins)
+                {
+                    decimal totalVisibleMemorySize;
+                    {
+                        totalVisibleMemorySize = decimal.TryParse(mo?.GetPropertyValue("TotalVisibleMemorySize")?.ToString(), out var parsed) ? parsed : 0;
+
+                    }
+                    decimal freePhysicalMemory;
+                    {
+                        freePhysicalMemory = decimal.TryParse(mo?.GetPropertyValue("FreePhysicalMemory")?.ToString(), out var parsed) ? parsed : 0;
+
+                    }
+                    decimal usePhysicalMemory = totalVisibleMemorySize - freePhysicalMemory;
+
+                    /*
+                    Console.WriteLine("usePhysicalMemory: {0:N0}KiB, {1:0.0}GiB", usePhysicalMemory, usePhysicalMemory / 1024 / 1024);
+                    Console.WriteLine("freePhysicalMemory: {0:N0}KiB, {1:0.0}GiB", freePhysicalMemory, freePhysicalMemory / 1024 / 1024);
+                    Console.WriteLine("totalVisibleMemorySize: {0:N0}KiB, {1:0.0}GiB", totalVisibleMemorySize, totalVisibleMemorySize / 1024 / 1024);
+                    Console.WriteLine("usage: {0:0}%", Math.Round(usePhysicalMemory / totalVisibleMemorySize * 100);
+                    */
+
+                    // メモリ使用率を0～1の範囲で取得し、% 変換
+                    decimal memoryUsageDecimal = usePhysicalMemory / totalVisibleMemorySize * 100;
+
+                    // それを丸める
+                    byte memoryUsage = (byte)Math.Round(memoryUsageDecimal);
+                    if (memoryUsage > 100)
+                    {
+                        memoryUsage = 100;
+                    }
+
+                    return memoryUsage;
+                }
             }
-            decimal totalVisibleMemorySize;
-            {
-                totalVisibleMemorySize = decimal.TryParse(mo?.GetPropertyValue("TotalVisibleMemorySize")?.ToString(), out var parsed) ? parsed : 0;
 
-            }
-            decimal freePhysicalMemory;
-            {
-                freePhysicalMemory = decimal.TryParse(mo?.GetPropertyValue("FreePhysicalMemory")?.ToString(), out var parsed) ? parsed : 0;
-
-            }
-            decimal usePhysicalMemory = totalVisibleMemorySize - freePhysicalMemory;
-
-            /*
-            Console.WriteLine("usePhysicalMemory: {0:N0}KiB, {1:0.0}GiB", usePhysicalMemory, usePhysicalMemory / 1024 / 1024);
-            Console.WriteLine("freePhysicalMemory: {0:N0}KiB, {1:0.0}GiB", freePhysicalMemory, freePhysicalMemory / 1024 / 1024);
-            Console.WriteLine("totalVisibleMemorySize: {0:N0}KiB, {1:0.0}GiB", totalVisibleMemorySize, totalVisibleMemorySize / 1024 / 1024);
-            Console.WriteLine("usage: {0:0}%", Math.Round(usePhysicalMemory / totalVisibleMemorySize * 100);
-            */
-
-            // メモリ使用率を0～1の範囲で取得し、% 変換
-            decimal memoryUsageDecimal = usePhysicalMemory / totalVisibleMemorySize * 100;
-
-            // それを丸める
-            byte memoryUsage = (byte)Math.Round(memoryUsageDecimal);
-            if (memoryUsage > 100)
-            {
-                memoryUsage = 100;
-            }
-
-            return memoryUsage;
+            return 0;
         }
 
         // GPU 使用率を取得
@@ -327,12 +332,20 @@ namespace windows11
         // タイマーイベントハンドラ
         private static void OnTimedEvent(Object? source, ElapsedEventArgs e)
         {
+            // Stopwatchインスタンスの作成
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             systemVolume = getSystemVolume();
             cpuUsage = getCpuUsage(processorPerformanceCounter);
-            memoryUsage = getMemoryUsage(memoryManagementObject);
+            memoryUsage = getMemoryUsage();
             gpuUsage = getGpuUsage(gpuCounters);
 
-            Console.WriteLine($"[{e.SignalTime:HH:mm:ss.fff}]: volume={systemVolume:0}%, cpu={cpuUsage:0}%, memory={memoryUsage:0}%, gpu={gpuUsage:0}%");
+            stopwatch.Stop();
+
+            Console.WriteLine($"[{e.SignalTime:HH:mm:ss.fff}]: " +
+                $"volume={systemVolume:0}%, cpu={cpuUsage:0}%, memory={memoryUsage:0}%, gpu={gpuUsage:0}% " +
+                $"(procTime={stopwatch.ElapsedMilliseconds}msec)");
         }
 
         [DllImport("user32.dll")]
@@ -341,17 +354,6 @@ namespace windows11
         {
             // カテゴリ名・カウンタ名・インスタンス名を指定してPerformanceCounterのインスタンスを作成
             processorPerformanceCounter = new PerformanceCounter("Processor Information", "% Processor Utility", "_Total");
-
-            // WMIインスタンスを取得
-            using (ManagementClass mc = new System.Management.ManagementClass("Win32_OperatingSystem"))
-            using (ManagementObjectCollection ins = mc.GetInstances())
-            {
-                foreach (System.Management.ManagementObject mo in ins)
-                {
-                    memoryManagementObject = mo;
-                    break;
-                }
-            }
 
             // GPU Engine の Performance Counter を取得
             var category = new PerformanceCounterCategory("GPU Engine");
@@ -438,7 +440,6 @@ namespace windows11
 
             timer.Stop();
             timer.Dispose();
-            memoryManagementObject?.Dispose();
         }
     }
 
