@@ -154,10 +154,10 @@ Screen1ViewBase::Screen1ViewBase() :
     add(memoryTextArea);
 
     displayProgress.setXY(0, 0);
-    displayProgress.setProgressIndicatorPosition(0, 0, 300, 10);
+    displayProgress.setProgressIndicatorPosition(0, 0, 800, 10);
     displayProgress.setRange(0, 100);
     displayProgress.setDirection(touchgfx::AbstractDirectionProgress::RIGHT);
-    displayProgress.setBackground(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BOXPROGRESS_NORMAL_MEDIUM_ID));
+    displayProgress.setBackground(touchgfx::Bitmap(BITMAP_PROGRESSBAR_ID));
     displayProgress.setColor(touchgfx::Color::getColorFromRGB(0, 240, 255));
     displayProgress.setValue(100);
     add(displayProgress);

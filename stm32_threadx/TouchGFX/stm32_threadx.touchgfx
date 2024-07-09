@@ -387,16 +387,15 @@
           {
             "Type": "BoxProgress",
             "Name": "displayProgress",
-            "Width": 300,
+            "Width": 800,
             "Height": 10,
             "Color": {
               "Green": 240,
               "Blue": 255
             },
             "Direction": "Right",
-            "Preset": "alternate_theme\\presets\\boxprogress\\normal\\medium_active.json",
-            "FileNameBackground": "__generated\\alternate_theme_images_widgets_boxprogress_normal_medium.png",
-            "IndicatorPositionWidth": 300,
+            "FileNameBackground": "ProgressBar.png",
+            "IndicatorPositionWidth": 800,
             "IndicatorPositionHeight": 10,
             "ProgressRangeMax": 100,
             "ProgressInitialValue": 100

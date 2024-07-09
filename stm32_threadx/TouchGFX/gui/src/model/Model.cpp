@@ -39,6 +39,10 @@ Model::Model() : modelListener(0),
 		systemVolume(0), cpuUsage(0), memoryUsage(0), gpuUsage(0)
 {
   printf("Model Constructor\n");
+
+  // Model まで起動したので、RED LED を消灯する (Active Low)
+  HAL_GPIO_WritePin(USER_LD2_RED_GPIO_Port, USER_LD2_RED_Pin, GPIO_PIN_SET);
+
   HAL_UART_Receive_IT(&huart1, buffer, RECV_PACKET_SIZE);
 }
 
