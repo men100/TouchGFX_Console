@@ -8,6 +8,7 @@
 #define SEND_PACKET_SIZE	4
 
 extern UART_HandleTypeDef huart1;
+extern TIM_HandleTypeDef htim3;
 
 typedef struct Packet {
 	uint8_t size;
@@ -43,13 +44,19 @@ Model::Model() : modelListener(0),
   // Model まで起動したので、RED LED を消灯する (Active Low)
   HAL_GPIO_WritePin(USER_LD2_RED_GPIO_Port, USER_LD2_RED_Pin, GPIO_PIN_SET);
 
+  // LCD Backlight の PWM 開始
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_4);
+
+  // シリアル受信割り込みを有効
   HAL_UART_Receive_IT(&huart1, buffer, RECV_PACKET_SIZE);
+
 }
 
 void Model::tick()
 {
   tickCounter++;
 
+  // USER_BUTTON 処理
   if (HAL_GPIO_ReadPin(USER_BUTTON_GPIO_Port, USER_BUTTON_Pin) == GPIO_PIN_SET) {
 	  if (isButtonReleased) {
 		  isButtonTriggered = 1;
@@ -93,7 +100,9 @@ void Model::setBackLightState(bool isOn)
 	{
 		return;
 	}
-	HAL_GPIO_WritePin(LCD_BL_CTRL_GPIO_Port, LCD_BL_CTRL_Pin, isOn ? GPIO_PIN_SET : GPIO_PIN_RESET);
+
+	// PWM の duty 比を変えて輝度を変える
+	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_4, isOn ? 75 : 0);
 
 	// Active Low (BL 点灯時は LED OFF)
 	HAL_GPIO_WritePin(USER_LD3_GREEN_GPIO_Port, USER_LD3_GREEN_Pin, isOn ? GPIO_PIN_SET : GPIO_PIN_RESET);
