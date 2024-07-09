@@ -7,7 +7,8 @@
 class Screen1View : public Screen1ViewBase
 {
 public:
-	const int BackLightOffTick = 1800; // バックライト消灯までの tick 数 (30秒)
+	const int BackLightOffTick = 3600; // バックライト消灯までの tick 数
+	const int IndicatorDivider = BackLightOffTick / 100;
 
     Screen1View();
     virtual ~Screen1View() {}
@@ -24,6 +25,8 @@ public:
     virtual void hdmi1();
     virtual void hdmi2();
     virtual void typec();
+
+    virtual void backgroundTouched();
 
     virtual void handleTickEvent();
 protected:

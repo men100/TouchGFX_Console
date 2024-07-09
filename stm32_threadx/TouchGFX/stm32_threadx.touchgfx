@@ -5,6 +5,25 @@
         "Name": "Screen1",
         "Components": [
           {
+            "Type": "FlexButton",
+            "Name": "backgroundButton",
+            "Width": 800,
+            "Height": 480,
+            "LockPosition": true,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "BoxWithBorderButtonStyle",
+                "Width": 800,
+                "Height": 480,
+                "LockToFlexButtonSize": true,
+                "BorderSize": 5
+              }
+            ]
+          },
+          {
             "Type": "Box",
             "Name": "volumeBox",
             "X": 485,
@@ -459,6 +478,17 @@
             "Action": {
               "Type": "ActionCustom",
               "FunctionName": "hdmi1"
+            }
+          },
+          {
+            "InteractionName": "BackgroundButton_Interaction",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "backgroundButton"
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "backgroundTouched"
             }
           }
         ]

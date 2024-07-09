@@ -7,11 +7,19 @@
 #include <texts/TextKeysAndLanguages.hpp>
 
 Screen1ViewBase::Screen1ViewBase() :
-    buttonCallback(this, &Screen1ViewBase::buttonCallbackHandler)
+    buttonCallback(this, &Screen1ViewBase::buttonCallbackHandler),
+    flexButtonCallback(this, &Screen1ViewBase::flexButtonCallbackHandler)
 {
     __background.setPosition(0, 0, 800, 480);
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     add(__background);
+
+    backgroundButton.setBoxWithBorderPosition(0, 0, 800, 480);
+    backgroundButton.setBorderSize(5);
+    backgroundButton.setBoxWithBorderColors(touchgfx::Color::getColorFromRGB(0, 0, 0), touchgfx::Color::getColorFromRGB(0, 0, 0), touchgfx::Color::getColorFromRGB(0, 0, 0), touchgfx::Color::getColorFromRGB(0, 0, 0));
+    backgroundButton.setAction(flexButtonCallback);
+    backgroundButton.setPosition(0, 0, 800, 480);
+    add(backgroundButton);
 
     volumeBox.setPosition(485, 19, 138, 138);
     volumeBox.setColor(touchgfx::Color::getColorFromRGB(28, 133, 28));
@@ -215,5 +223,16 @@ void Screen1ViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)
         //When hdmi1Button clicked call virtual function
         //Call hdmi1
         hdmi1();
+    }
+}
+
+void Screen1ViewBase::flexButtonCallbackHandler(const touchgfx::AbstractButtonContainer& src)
+{
+    if (&src == &backgroundButton)
+    {
+        //BackgroundButton_Interaction
+        //When backgroundButton clicked call virtual function
+        //Call backgroundTouched
+        backgroundTouched();
     }
 }
