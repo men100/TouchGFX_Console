@@ -21,11 +21,24 @@ namespace windows11
         static byte memoryUsage = 0;
         static byte gpuUsage = 0;
 
+        enum Command {
+            COMMAND_INFO,
+            COMMAND_PLAY,
+            COMMAND_NEXT,
+            COMMAND_PREV,
+            COMMAND_VLUP,
+            COMMAND_VLDN,
+            COMMAND_DISP,
+            COMMAND_HMI1,
+            COMMAND_HMI2,
+            COMMAND_TYPC
+        };
+
         struct Packet
         {
             public byte size;
             public byte version;
-            public byte result;
+            public byte command;
             public byte volume;
             public byte cpuUsage;
             public byte memoryUsage;
@@ -257,6 +270,8 @@ namespace windows11
             SerialPort sp = (SerialPort)sender;
             string data = sp.ReadExisting();  // 受信データを読み込む
             Console.WriteLine("Received: " + data);
+
+            Command command = Command.COMMAND_INFO;
             bool isNeedReply = false;
 
             if (serialPort != null)
@@ -265,46 +280,56 @@ namespace windows11
                 {
                     case "INFO":
                         isNeedReply = true;
+                        command = Command.COMMAND_INFO;
                         break;
 
                     case "PLAY":
                         Play();
+                        command = Command.COMMAND_PLAY;
                         break;
 
                     case "NEXT":
                         NextMusic();
+                        command = Command.COMMAND_NEXT;
                         break;
 
                     case "PREV":
                         PrevMusic();
+                        command = Command.COMMAND_PREV;
                         break;
 
                     case "VLUP":
                         VolumeUp();
                         systemVolume = getSystemVolume();
+                        command = Command.COMMAND_VLUP;
                         isNeedReply = true;
                         break;
 
                     case "VLDN":
                         VolumeDown();
                         systemVolume = getSystemVolume();
+                        command = Command.COMMAND_VLDN;
                         isNeedReply = true;
                         break;
 
                     case "DISP":
                         DisplayPort();
+                        command = Command.COMMAND_DISP;
                         break;
 
                     case "HMI1":
                         HDMI1();
+                        command = Command.COMMAND_HMI1;
                         break;
 
                     case "HMI2":
                         HDMI2();
+                        command = Command.COMMAND_HMI2;
                         break;
 
                     case "TYPC":
                         TypeC();
+                        command = Command.COMMAND_TYPC;
                         break;
 
                     default:
@@ -317,7 +342,7 @@ namespace windows11
                     Packet packet = new Packet();
                     packet.size = (byte)Marshal.SizeOf(packet);
                     packet.version = 0;
-                    packet.result = 0;
+                    packet.command = (byte)command;
                     packet.volume = systemVolume;
                     packet.cpuUsage = cpuUsage;
                     packet.memoryUsage = memoryUsage;
