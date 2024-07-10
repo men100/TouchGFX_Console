@@ -6,6 +6,36 @@
   <Texts>
     <TextGroup Id="Group1" />
     <TextGroup Id="Unsorted">
+      <Text Id="__SingleUse_Y1P7" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">000</Translation>
+      </Text>
+      <Text Id="__SingleUse_8SEU" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;%</Translation>
+      </Text>
+      <Text Id="__SingleUse_L78J" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">000</Translation>
+      </Text>
+      <Text Id="__SingleUse_3LJH" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;%</Translation>
+      </Text>
+      <Text Id="__SingleUse_27DM" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">000</Translation>
+      </Text>
+      <Text Id="__SingleUse_UJ4I" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;%</Translation>
+      </Text>
+      <Text Id="__SingleUse_PGCO" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">Show&#10;Graph</Translation>
+      </Text>
+      <Text Id="__SingleUse_QFER" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">GPU&#10;Usage</Translation>
+      </Text>
+      <Text Id="__SingleUse_TN4C" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">Memory&#10;Usage</Translation>
+      </Text>
+      <Text Id="__SingleUse_EORU" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">CPU&#10;Usage</Translation>
+      </Text>
       <Text Id="__SingleUse_BAJR" Alignment="Center" TypographyId="Default">
         <Translation Language="GB">CPU&#10;Usage</Translation>
       </Text>

@@ -10,10 +10,23 @@
 extern UART_HandleTypeDef huart1;
 extern TIM_HandleTypeDef htim3;
 
+enum {
+	COMMAND_INFO,
+	COMMAND_PLAY,
+	COMMAND_NEXT,
+	COMMAND_PREV,
+	COMMAND_VLUP,
+	COMMAND_VLDN,
+	COMMAND_DISP,
+	COMMAND_HMI1,
+	COMMAND_HMI2,
+	COMMAND_TYPC
+};
+
 typedef struct Packet {
 	uint8_t size;
 	uint8_t version;
-	uint8_t result;
+	uint8_t command;
 	uint8_t volume;
 	uint8_t cpuUsage;
 	uint8_t memoryUsage;
@@ -21,7 +34,6 @@ typedef struct Packet {
 } Packet;
 
 int gUartReceived = 0;
-int gIsAlreadySend = 0;
 
 uint8_t buffer[256];
 Packet packet;
@@ -44,7 +56,7 @@ Model::Model() : modelListener(0),
   // Model まで起動したので、RED LED を消灯する (Active Low)
   HAL_GPIO_WritePin(USER_LD2_RED_GPIO_Port, USER_LD2_RED_Pin, GPIO_PIN_SET);
 
-  // LCD Backlight の PWM 開始
+  // LCD Back light の PWM 開始
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_4);
 
   // シリアル受信割り込みを有効
@@ -75,21 +87,26 @@ void Model::tick()
 
   if (gUartReceived) {
 	memcpy(&packet, buffer, RECV_PACKET_SIZE);
-	printf("size:%d, version:%d, result:%d, volume:%d, cpu:%d, memory:%d, gpu:%d\n",
-			packet.size, packet.version, packet.result, packet.volume,
+	printf("size:%d, version:%d, command:%d, volume:%d, cpu:%d, memory:%d, gpu:%d\n",
+			packet.size, packet.version, packet.command, packet.volume,
 			packet.cpuUsage, packet.memoryUsage, packet.gpuUsage);
-	systemVolume = packet.volume;
-	cpuUsage = packet.cpuUsage;
-	memoryUsage = packet.memoryUsage;
-	gpuUsage = packet.gpuUsage;
+	switch (packet.command) {
+	case COMMAND_INFO:
+		systemVolume = packet.volume;
+		cpuUsage = packet.cpuUsage;
+		memoryUsage = packet.memoryUsage;
+		gpuUsage = packet.gpuUsage;
+		break;
+
+	case COMMAND_VLUP:
+	case COMMAND_VLDN:
+		systemVolume = packet.volume;
+		break;
+	}
 	gUartReceived = 0;
     HAL_UART_Receive_IT(&huart1, buffer, RECV_PACKET_SIZE);
   } else if (tickCounter > 60) {
-	if (gIsAlreadySend) {
-		gIsAlreadySend = 0;
-	} else {
-		HAL_UART_Transmit_IT(&huart1, (const uint8_t*)"INFO", SEND_PACKET_SIZE);
-	}
+	HAL_UART_Transmit_IT(&huart1, (const uint8_t*)"INFO", SEND_PACKET_SIZE);
     tickCounter = 0;
   }
 }
@@ -113,53 +130,44 @@ void Model::setBackLightState(bool isOn)
 void Model::play()
 {
 	HAL_UART_Transmit_IT(&huart1, (const uint8_t*)"PLAY", SEND_PACKET_SIZE);
-	gIsAlreadySend = 1;
 }
 
 void Model::nextMusic()
 {
 	HAL_UART_Transmit_IT(&huart1, (const uint8_t*)"NEXT", SEND_PACKET_SIZE);
-	gIsAlreadySend = 1;
 }
 
 void Model::prevMusic()
 {
 	HAL_UART_Transmit_IT(&huart1, (const uint8_t*)"PREV", SEND_PACKET_SIZE);
-	gIsAlreadySend = 1;
 }
 
 void Model::volumeUp()
 {
 	HAL_UART_Transmit_IT(&huart1, (const uint8_t*)"VLUP", SEND_PACKET_SIZE);
-	gIsAlreadySend = 1;
 }
 
 void Model::volumeDown()
 {
 	HAL_UART_Transmit_IT(&huart1, (const uint8_t*)"VLDN", SEND_PACKET_SIZE);
-	gIsAlreadySend = 1;
 }
 
 void Model::displayPort()
 {
 	HAL_UART_Transmit_IT(&huart1, (const uint8_t*)"DISP", SEND_PACKET_SIZE);
-	gIsAlreadySend = 1;
 }
 
 void Model::hdmi1()
 {
 	HAL_UART_Transmit_IT(&huart1, (const uint8_t*)"HMI1", SEND_PACKET_SIZE);
-	gIsAlreadySend = 1;
 }
 
 void Model::hdmi2()
 {
 	HAL_UART_Transmit_IT(&huart1, (const uint8_t*)"HMI2", SEND_PACKET_SIZE);
-	gIsAlreadySend = 1;
 }
 
 void Model::typec()
 {
 	HAL_UART_Transmit_IT(&huart1, (const uint8_t*)"TYPC", SEND_PACKET_SIZE);
-	gIsAlreadySend = 1;
 }

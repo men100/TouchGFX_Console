@@ -68,6 +68,8 @@ protected:
     touchgfx::Box __background;
     touchgfx::BoxWithBorderButtonStyle< touchgfx::ClickButtonTrigger >  backgroundButton;
     touchgfx::Box volumeBox;
+    touchgfx::Box gpuBox;
+    touchgfx::Box memoryBox;
     touchgfx::Box cpuBox;
     touchgfx::ButtonWithLabel volumeUpButton;
     touchgfx::ButtonWithLabel playButton;
@@ -75,15 +77,14 @@ protected:
     touchgfx::ButtonWithLabel prevButton;
     touchgfx::ButtonWithLabel displayportButton;
     touchgfx::ButtonWithLabel hdmi1Button;
+    touchgfx::ButtonWithLabel showGraphButton;
     touchgfx::ButtonWithLabel volumeDownButton;
     touchgfx::TextArea volumeLabelTextArea;
     touchgfx::TextArea cpuLabelTextArea;
     touchgfx::TextAreaWithOneWildcard volumeTextArea;
     touchgfx::TextAreaWithOneWildcard cpuTextArea;
-    touchgfx::Box gpuBox;
     touchgfx::TextArea gpuLabelTextArea;
     touchgfx::TextAreaWithOneWildcard gpuTextArea;
-    touchgfx::Box memoryBox;
     touchgfx::TextArea memoryLabelTextArea;
     touchgfx::TextAreaWithOneWildcard memoryTextArea;
     touchgfx::BoxProgress displayProgress;
