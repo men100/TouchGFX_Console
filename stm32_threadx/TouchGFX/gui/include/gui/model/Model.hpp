@@ -21,6 +21,9 @@ public:
     void setCurrentScreenIndex(uint8_t index) { currentScreenIndex = index; }
     void setBackLightState(bool isOn);
     bool getBackLightState() { return isBackLightOn; }
+    void setBackLightBrightness(uint8_t brightness);
+    uint8_t getBackLightBrightness() const { return backLightBrightness; }
+
 
     uint8_t getSystemVolume() { return systemVolume; }
     uint8_t getCpuUsage() { return cpuUsage[usageIndex]; }
@@ -44,6 +47,7 @@ protected:
     ModelListener* modelListener;
 private:
     uint8_t currentScreenIndex;
+    uint8_t backLightBrightness;
     int16_t tickCounter;
     bool isBackLightOn;
     uint8_t systemVolume;

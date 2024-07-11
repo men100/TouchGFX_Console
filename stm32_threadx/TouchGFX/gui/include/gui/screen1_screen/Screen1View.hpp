@@ -9,6 +9,10 @@ class Screen1View : public Screen1ViewBase
 public:
 	const int BackLightOffTick = 3600; // バックライト消灯までの tick 数
 	const int IndicatorDivider = BackLightOffTick / 100;
+	enum {
+		BackLightBrightness_High = 75,
+		BackLightBrightness_Low = 25
+	};
 
     Screen1View();
     virtual ~Screen1View() {}
@@ -32,6 +36,7 @@ public:
 protected:
 private:
     void updateEachUsage();
+    void resetBackLightBrightness();
 
     int16_t tickCounter;
 };

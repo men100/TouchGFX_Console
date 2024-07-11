@@ -29,6 +29,12 @@ void Screen1View::handleTickEvent()
 		if (rest > 0) {
 			int displayProgressValue = rest / IndicatorDivider;
 			displayProgress.setValue(displayProgressValue);
+
+			if (displayProgressValue < 50 && presenter->getBackLightBrightness() != BackLightBrightness_Low)
+			{
+				presenter->setBackLightBrightness(BackLightBrightness_Low);
+			}
+
 			tickCounter++;
 		} else {
 			presenter->setBackLightState(false);
@@ -52,71 +58,80 @@ void Screen1View::updateEachUsage()
 	gpuTextArea.invalidate();
 }
 
+void Screen1View::resetBackLightBrightness()
+{
+	if (presenter->getBackLightBrightness() != BackLightBrightness_High)
+	{
+		presenter->setBackLightBrightness(BackLightBrightness_High);
+	}
+	tickCounter = 0;
+}
+
 void Screen1View::play()
 {
 	printf("play\n");
 	presenter->play();
-	tickCounter = 0;
+	resetBackLightBrightness();
 }
 
 void Screen1View::nextMusic()
 {
 	printf("next\n");
 	presenter->nextMusic();
-	tickCounter = 0;
+	resetBackLightBrightness();
 }
 
 void Screen1View::prevMusic()
 {
 	printf("prev\n");
 	presenter->prevMusic();
-	tickCounter = 0;
+	resetBackLightBrightness();
 }
 
 void Screen1View::volumeUp()
 {
 	printf("volumeUp\n");
 	presenter->volumeUp();
-	tickCounter = 0;
+	resetBackLightBrightness();
 }
 
 void Screen1View::volumeDown()
 {
 	printf("volumeDown\n");
 	presenter->volumeDown();
-	tickCounter = 0;
+	resetBackLightBrightness();
 }
 
 void Screen1View::displayPort()
 {
 	printf("displayPort\n");
 	presenter->displayPort();
-	tickCounter = 0;
+	resetBackLightBrightness();
 }
 
 void Screen1View::hdmi1()
 {
 	printf("hdmi1\n");
 	presenter->hdmi1();
-	tickCounter = 0;
+	resetBackLightBrightness();
 }
 
 void Screen1View::hdmi2()
 {
 	printf("hdmi2\n");
 	presenter->hdmi2();
-	tickCounter = 0;
+	resetBackLightBrightness();
 }
 
 void Screen1View::typec()
 {
 	printf("typec\n");
 	presenter->typec();
-	tickCounter = 0;
+	resetBackLightBrightness();
 }
 
 void Screen1View::backgroundTouched()
 {
 	printf("background\n");
-	tickCounter = 0;
+	resetBackLightBrightness();
 }

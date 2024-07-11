@@ -48,6 +48,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 Model::Model() : modelListener(0),
 		currentScreenIndex(0), tickCounter(0),
+		backLightBrightness(0),
 		isBackLightOn(true),
 		systemVolume(0), usageIndex(0)
 {
@@ -67,7 +68,6 @@ Model::Model() : modelListener(0),
 
   // シリアル受信割り込みを有効
   HAL_UART_Receive_IT(&huart1, buffer, RECV_PACKET_SIZE);
-
 }
 
 void Model::tick()
@@ -122,13 +122,26 @@ void Model::setBackLightState(bool isOn)
 		return;
 	}
 
+	backLightBrightness = isOn ? 75 : 0;
+
 	// PWM の duty 比を変えて輝度を変える
-	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_4, isOn ? 75 : 0);
+	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_4, backLightBrightness);
 
 	// Active Low (BL 点灯時は LED OFF)
 	HAL_GPIO_WritePin(USER_LD3_GREEN_GPIO_Port, USER_LD3_GREEN_Pin, isOn ? GPIO_PIN_SET : GPIO_PIN_RESET);
 
 	isBackLightOn = isOn;
+}
+
+void Model::setBackLightBrightness(uint8_t brightness)
+{
+	if (brightness > 100)
+	{
+		brightness = 100;
+	}
+	backLightBrightness = brightness;
+
+	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_4, backLightBrightness);
 }
 
 void Model::setEachUsage(uint8_t cpu, uint8_t memory, uint8_t gpu)

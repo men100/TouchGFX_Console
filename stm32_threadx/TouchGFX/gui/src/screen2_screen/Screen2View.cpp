@@ -23,6 +23,7 @@ void Screen2View::setupScreen()
 	uint8_t gpu[Model::USAGE_ARRAY_NUM];
 	presenter->getEachUsage(cpu, memory, gpu);
 
+	// 取得した各種 usage データを流し込む
 	for (int i = 0; i < Model::USAGE_ARRAY_NUM; i++) {
 //		printf("(cpu, memory, gpu)=(%d, %d, %d)\n", cpu[i], memory[i], gpu[i]);
 		cpuDynamicGraph.addDataPoint(cpu[i]);

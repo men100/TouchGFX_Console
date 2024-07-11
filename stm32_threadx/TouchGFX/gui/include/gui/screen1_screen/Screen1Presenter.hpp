@@ -39,6 +39,14 @@ public:
     {
     	return model->getBackLightState();
     }
+    void setBackLightBrightness(uint8_t brightness)
+    {
+    	model->setBackLightBrightness(brightness);
+    }
+    uint8_t getBackLightBrightness() const
+    {
+    	return model->getBackLightBrightness();
+    }
 
     void play()
     {
