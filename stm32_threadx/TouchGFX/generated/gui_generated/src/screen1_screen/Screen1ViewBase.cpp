@@ -21,23 +21,11 @@ Screen1ViewBase::Screen1ViewBase() :
     backgroundButton.setPosition(0, 0, 800, 480);
     add(backgroundButton);
 
-    volumeBox.setPosition(650, 19, 138, 138);
+    volumeBox.setPosition(488, 326, 138, 138);
     volumeBox.setColor(touchgfx::Color::getColorFromRGB(28, 133, 28));
     add(volumeBox);
 
-    gpuBox.setPosition(493, 19, 138, 138);
-    gpuBox.setColor(touchgfx::Color::getColorFromRGB(28, 133, 28));
-    add(gpuBox);
-
-    memoryBox.setPosition(332, 18, 138, 138);
-    memoryBox.setColor(touchgfx::Color::getColorFromRGB(28, 133, 28));
-    add(memoryBox);
-
-    cpuBox.setPosition(172, 18, 138, 138);
-    cpuBox.setColor(touchgfx::Color::getColorFromRGB(28, 133, 28));
-    add(cpuBox);
-
-    volumeUpButton.setXY(650, 172);
+    volumeUpButton.setXY(645, 326);
     volumeUpButton.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_ACTION_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_PRESSED_ID));
     volumeUpButton.setLabelText(touchgfx::TypedText(T___SINGLEUSE_RHLM));
     volumeUpButton.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
@@ -45,7 +33,7 @@ Screen1ViewBase::Screen1ViewBase() :
     volumeUpButton.setAction(buttonCallback);
     add(volumeUpButton);
 
-    playButton.setXY(172, 322);
+    playButton.setXY(488, 171);
     playButton.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_ACTION_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_PRESSED_ID));
     playButton.setLabelText(touchgfx::TypedText(T___SINGLEUSE_DTVB));
     playButton.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
@@ -53,7 +41,7 @@ Screen1ViewBase::Screen1ViewBase() :
     playButton.setAction(buttonCallback);
     add(playButton);
 
-    nextButton.setXY(332, 322);
+    nextButton.setXY(645, 171);
     nextButton.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_ACTION_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_PRESSED_ID));
     nextButton.setLabelText(touchgfx::TypedText(T___SINGLEUSE_YO9U));
     nextButton.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
@@ -61,7 +49,7 @@ Screen1ViewBase::Screen1ViewBase() :
     nextButton.setAction(buttonCallback);
     add(nextButton);
 
-    prevButton.setXY(14, 322);
+    prevButton.setXY(331, 171);
     prevButton.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_ACTION_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_PRESSED_ID));
     prevButton.setLabelText(touchgfx::TypedText(T___SINGLEUSE_LNUN));
     prevButton.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
@@ -69,7 +57,7 @@ Screen1ViewBase::Screen1ViewBase() :
     prevButton.setAction(buttonCallback);
     add(prevButton);
 
-    displayportButton.setXY(15, 171);
+    displayportButton.setXY(17, 171);
     displayportButton.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_ACTIVE_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_PRESSED_ID));
     displayportButton.setLabelText(touchgfx::TypedText(T___SINGLEUSE_EGPT));
     displayportButton.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
@@ -77,7 +65,7 @@ Screen1ViewBase::Screen1ViewBase() :
     displayportButton.setAction(buttonCallback);
     add(displayportButton);
 
-    hdmi1Button.setXY(173, 171);
+    hdmi1Button.setXY(174, 171);
     hdmi1Button.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_ACTIVE_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_PRESSED_ID));
     hdmi1Button.setLabelText(touchgfx::TypedText(T___SINGLEUSE_JU3E));
     hdmi1Button.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
@@ -85,15 +73,7 @@ Screen1ViewBase::Screen1ViewBase() :
     hdmi1Button.setAction(buttonCallback);
     add(hdmi1Button);
 
-    showGraphButton.setXY(15, 21);
-    showGraphButton.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_ACTION_ID), touchgfx::Bitmap(BITMAP_DARK_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_PRESSED_ID));
-    showGraphButton.setLabelText(touchgfx::TypedText(T___SINGLEUSE_PGCO));
-    showGraphButton.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
-    showGraphButton.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
-    showGraphButton.setAction(buttonCallback);
-    add(showGraphButton);
-
-    volumeDownButton.setXY(650, 323);
+    volumeDownButton.setXY(331, 326);
     volumeDownButton.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_ACTION_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_MEDIUM_FILL_PRESSED_ID));
     volumeDownButton.setLabelText(touchgfx::TypedText(T___SINGLEUSE_VPF3));
     volumeDownButton.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
@@ -101,19 +81,26 @@ Screen1ViewBase::Screen1ViewBase() :
     volumeDownButton.setAction(buttonCallback);
     add(volumeDownButton);
 
-    volumeLabelTextArea.setXY(682, 64);
+    eachUsageButton.setBoxWithBorderPosition(0, 0, 296, 138);
+    eachUsageButton.setBorderSize(5);
+    eachUsageButton.setBoxWithBorderColors(touchgfx::Color::getColorFromRGB(148, 4, 31), touchgfx::Color::getColorFromRGB(150, 62, 79), touchgfx::Color::getColorFromRGB(0, 51, 102), touchgfx::Color::getColorFromRGB(51, 102, 153));
+    eachUsageButton.setAction(flexButtonCallback);
+    eachUsageButton.setPosition(17, 17, 296, 138);
+    add(eachUsageButton);
+
+    volumeLabelTextArea.setXY(520, 371);
     volumeLabelTextArea.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
     volumeLabelTextArea.setLinespacing(0);
     volumeLabelTextArea.setTypedText(touchgfx::TypedText(T___SINGLEUSE_POGE));
     add(volumeLabelTextArea);
 
-    cpuLabelTextArea.setXY(210, 40);
+    cpuLabelTextArea.setXY(30, 40);
     cpuLabelTextArea.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
     cpuLabelTextArea.setLinespacing(0);
     cpuLabelTextArea.setTypedText(touchgfx::TypedText(T___SINGLEUSE_BAJR));
     add(cpuLabelTextArea);
 
-    volumeTextArea.setXY(689, 98);
+    volumeTextArea.setXY(527, 405);
     volumeTextArea.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
     volumeTextArea.setLinespacing(0);
     Unicode::snprintf(volumeTextAreaBuffer, VOLUMETEXTAREA_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_QXAV).getText());
@@ -122,7 +109,7 @@ Screen1ViewBase::Screen1ViewBase() :
     volumeTextArea.setTypedText(touchgfx::TypedText(T___SINGLEUSE_0VKQ));
     add(volumeTextArea);
 
-    cpuTextArea.setXY(211, 110);
+    cpuTextArea.setXY(225, 40);
     cpuTextArea.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
     cpuTextArea.setLinespacing(0);
     Unicode::snprintf(cpuTextAreaBuffer, CPUTEXTAREA_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_ZQHL).getText());
@@ -131,13 +118,13 @@ Screen1ViewBase::Screen1ViewBase() :
     cpuTextArea.setTypedText(touchgfx::TypedText(T___SINGLEUSE_WR48));
     add(cpuTextArea);
 
-    gpuLabelTextArea.setXY(532, 40);
+    gpuLabelTextArea.setXY(30, 111);
     gpuLabelTextArea.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
     gpuLabelTextArea.setLinespacing(0);
     gpuLabelTextArea.setTypedText(touchgfx::TypedText(T___SINGLEUSE_5BDZ));
     add(gpuLabelTextArea);
 
-    gpuTextArea.setXY(532, 110);
+    gpuTextArea.setXY(225, 111);
     gpuTextArea.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
     gpuTextArea.setLinespacing(0);
     Unicode::snprintf(gpuTextAreaBuffer, GPUTEXTAREA_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_C3ZQ).getText());
@@ -146,13 +133,13 @@ Screen1ViewBase::Screen1ViewBase() :
     gpuTextArea.setTypedText(touchgfx::TypedText(T___SINGLEUSE_YMYI));
     add(gpuTextArea);
 
-    memoryLabelTextArea.setXY(361, 42);
+    memoryLabelTextArea.setXY(30, 75);
     memoryLabelTextArea.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
     memoryLabelTextArea.setLinespacing(0);
     memoryLabelTextArea.setTypedText(touchgfx::TypedText(T___SINGLEUSE_RA6S));
     add(memoryLabelTextArea);
 
-    memoryTextArea.setXY(371, 111);
+    memoryTextArea.setXY(225, 75);
     memoryTextArea.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
     memoryTextArea.setLinespacing(0);
     Unicode::snprintf(memoryTextAreaBuffer, MEMORYTEXTAREA_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_X8D8).getText());
@@ -232,13 +219,6 @@ void Screen1ViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)
         //Call hdmi1
         hdmi1();
     }
-    if (&src == &showGraphButton)
-    {
-        //Interaction1
-        //When showGraphButton clicked change screen to Screen2
-        //Go to Screen2 with screen transition towards East
-        application().gotoScreen2ScreenWipeTransitionEast();
-    }
 }
 
 void Screen1ViewBase::flexButtonCallbackHandler(const touchgfx::AbstractButtonContainer& src)
@@ -249,5 +229,12 @@ void Screen1ViewBase::flexButtonCallbackHandler(const touchgfx::AbstractButtonCo
         //When backgroundButton clicked call virtual function
         //Call backgroundTouched
         backgroundTouched();
+    }
+    if (&src == &eachUsageButton)
+    {
+        //EachUsageButton_Interaction
+        //When eachUsageButton clicked change screen to Screen2
+        //Go to Screen2 with screen transition towards West
+        application().gotoScreen2ScreenWipeTransitionWest();
     }
 }

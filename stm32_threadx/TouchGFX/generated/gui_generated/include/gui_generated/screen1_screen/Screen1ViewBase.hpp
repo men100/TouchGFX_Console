@@ -68,17 +68,14 @@ protected:
     touchgfx::Box __background;
     touchgfx::BoxWithBorderButtonStyle< touchgfx::ClickButtonTrigger >  backgroundButton;
     touchgfx::Box volumeBox;
-    touchgfx::Box gpuBox;
-    touchgfx::Box memoryBox;
-    touchgfx::Box cpuBox;
     touchgfx::ButtonWithLabel volumeUpButton;
     touchgfx::ButtonWithLabel playButton;
     touchgfx::ButtonWithLabel nextButton;
     touchgfx::ButtonWithLabel prevButton;
     touchgfx::ButtonWithLabel displayportButton;
     touchgfx::ButtonWithLabel hdmi1Button;
-    touchgfx::ButtonWithLabel showGraphButton;
     touchgfx::ButtonWithLabel volumeDownButton;
+    touchgfx::BoxWithBorderButtonStyle< touchgfx::ClickButtonTrigger >  eachUsageButton;
     touchgfx::TextArea volumeLabelTextArea;
     touchgfx::TextArea cpuLabelTextArea;
     touchgfx::TextAreaWithOneWildcard volumeTextArea;

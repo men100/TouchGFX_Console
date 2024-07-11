@@ -31,6 +31,8 @@ public:
     virtual void handleTickEvent();
 protected:
 private:
+    void updateEachUsage();
+
     int16_t tickCounter;
 };
 

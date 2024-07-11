@@ -26,47 +26,8 @@
           {
             "Type": "Box",
             "Name": "volumeBox",
-            "X": 650,
-            "Y": 19,
-            "Width": 138,
-            "Height": 138,
-            "Color": {
-              "Red": 28,
-              "Green": 133,
-              "Blue": 28
-            }
-          },
-          {
-            "Type": "Box",
-            "Name": "gpuBox",
-            "X": 493,
-            "Y": 19,
-            "Width": 138,
-            "Height": 138,
-            "Color": {
-              "Red": 28,
-              "Green": 133,
-              "Blue": 28
-            }
-          },
-          {
-            "Type": "Box",
-            "Name": "memoryBox",
-            "X": 332,
-            "Y": 18,
-            "Width": 138,
-            "Height": 138,
-            "Color": {
-              "Red": 28,
-              "Green": 133,
-              "Blue": 28
-            }
-          },
-          {
-            "Type": "Box",
-            "Name": "cpuBox",
-            "X": 172,
-            "Y": 18,
+            "X": 488,
+            "Y": 326,
             "Width": 138,
             "Height": 138,
             "Color": {
@@ -78,8 +39,8 @@
           {
             "Type": "ButtonWithLabel",
             "Name": "volumeUpButton",
-            "X": 650,
-            "Y": 172,
+            "X": 645,
+            "Y": 326,
             "Width": 138,
             "Height": 138,
             "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
@@ -101,8 +62,8 @@
           {
             "Type": "ButtonWithLabel",
             "Name": "playButton",
-            "X": 172,
-            "Y": 322,
+            "X": 488,
+            "Y": 171,
             "Width": 138,
             "Height": 138,
             "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
@@ -124,8 +85,8 @@
           {
             "Type": "ButtonWithLabel",
             "Name": "nextButton",
-            "X": 332,
-            "Y": 322,
+            "X": 645,
+            "Y": 171,
             "Width": 138,
             "Height": 138,
             "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
@@ -147,8 +108,8 @@
           {
             "Type": "ButtonWithLabel",
             "Name": "prevButton",
-            "X": 14,
-            "Y": 322,
+            "X": 331,
+            "Y": 171,
             "Width": 138,
             "Height": 138,
             "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
@@ -170,7 +131,7 @@
           {
             "Type": "ButtonWithLabel",
             "Name": "displayportButton",
-            "X": 15,
+            "X": 17,
             "Y": 171,
             "Width": 138,
             "Height": 138,
@@ -193,7 +154,7 @@
           {
             "Type": "ButtonWithLabel",
             "Name": "hdmi1Button",
-            "X": 173,
+            "X": 174,
             "Y": 171,
             "Width": 138,
             "Height": 138,
@@ -215,32 +176,9 @@
           },
           {
             "Type": "ButtonWithLabel",
-            "Name": "showGraphButton",
-            "X": 15,
-            "Y": 21,
-            "Width": 138,
-            "Height": 138,
-            "Pressed": "__generated\\dark_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
-            "Released": "__generated\\dark_theme_images_widgets_button_icon_rounded_medium_fill_action.png",
-            "TextId": "__SingleUse_PGCO",
-            "ReleasedColor": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "PressedColor": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "TextRotation": "0",
-            "Preset": "dark_theme\\presets\\button\\icon\\rounded\\medium_fill_action.json"
-          },
-          {
-            "Type": "ButtonWithLabel",
             "Name": "volumeDownButton",
-            "X": 650,
-            "Y": 323,
+            "X": 331,
+            "Y": 326,
             "Width": 138,
             "Height": 138,
             "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_medium_fill_pressed.png",
@@ -260,10 +198,49 @@
             "Preset": "alternate_theme\\presets\\button\\icon\\rounded\\medium_fill_action.json"
           },
           {
+            "Type": "FlexButton",
+            "Name": "eachUsageButton",
+            "X": 17,
+            "Y": 17,
+            "Width": 296,
+            "Height": 138,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "BoxWithBorderButtonStyle",
+                "Width": 296,
+                "Height": 138,
+                "LockToFlexButtonSize": true,
+                "BorderSize": 5,
+                "ColorReleased": {
+                  "Red": 148,
+                  "Green": 4,
+                  "Blue": 31
+                },
+                "ColorPressed": {
+                  "Red": 150,
+                  "Green": 62,
+                  "Blue": 79
+                },
+                "ColorBorderReleased": {
+                  "Green": 51,
+                  "Blue": 102
+                },
+                "ColorBorderPressed": {
+                  "Red": 51,
+                  "Green": 102,
+                  "Blue": 153
+                }
+              }
+            ]
+          },
+          {
             "Type": "TextArea",
             "Name": "volumeLabelTextArea",
-            "X": 682,
-            "Y": 64,
+            "X": 520,
+            "Y": 371,
             "Width": 74,
             "Height": 24,
             "TextId": "__SingleUse_POGE",
@@ -278,10 +255,10 @@
           {
             "Type": "TextArea",
             "Name": "cpuLabelTextArea",
-            "X": 210,
+            "X": 30,
             "Y": 40,
-            "Width": 61,
-            "Height": 48,
+            "Width": 109,
+            "Height": 24,
             "TextId": "__SingleUse_BAJR",
             "TextRotation": "0",
             "Color": {
@@ -294,8 +271,8 @@
           {
             "Type": "TextArea",
             "Name": "volumeTextArea",
-            "X": 689,
-            "Y": 98,
+            "X": 527,
+            "Y": 405,
             "Width": 61,
             "Height": 24,
             "TextId": "__SingleUse_0VKQ",
@@ -315,8 +292,8 @@
           {
             "Type": "TextArea",
             "Name": "cpuTextArea",
-            "X": 211,
-            "Y": 110,
+            "X": 225,
+            "Y": 40,
             "Width": 61,
             "Height": 24,
             "TextId": "__SingleUse_WR48",
@@ -336,10 +313,10 @@
           {
             "Type": "TextArea",
             "Name": "gpuLabelTextArea",
-            "X": 532,
-            "Y": 40,
-            "Width": 61,
-            "Height": 48,
+            "X": 30,
+            "Y": 111,
+            "Width": 111,
+            "Height": 24,
             "TextId": "__SingleUse_5BDZ",
             "TextRotation": "0",
             "Color": {
@@ -352,8 +329,8 @@
           {
             "Type": "TextArea",
             "Name": "gpuTextArea",
-            "X": 532,
-            "Y": 110,
+            "X": 225,
+            "Y": 111,
             "Width": 61,
             "Height": 24,
             "TextId": "__SingleUse_YMYI",
@@ -373,10 +350,10 @@
           {
             "Type": "TextArea",
             "Name": "memoryLabelTextArea",
-            "X": 361,
-            "Y": 42,
-            "Width": 81,
-            "Height": 48,
+            "X": 30,
+            "Y": 75,
+            "Width": 149,
+            "Height": 24,
             "TextId": "__SingleUse_RA6S",
             "TextRotation": "0",
             "Color": {
@@ -389,8 +366,8 @@
           {
             "Type": "TextArea",
             "Name": "memoryTextArea",
-            "X": 371,
-            "Y": 111,
+            "X": 225,
+            "Y": 75,
             "Width": 61,
             "Height": 24,
             "TextId": "__SingleUse_2NUH",
@@ -514,15 +491,15 @@
             }
           },
           {
-            "InteractionName": "Interaction1",
+            "InteractionName": "EachUsageButton_Interaction",
             "Trigger": {
               "Type": "TriggerClicked",
-              "TriggerComponent": "showGraphButton"
+              "TriggerComponent": "eachUsageButton"
             },
             "Action": {
               "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionWipe",
-              "ScreenTransitionDirection": "East",
+              "ScreenTransitionDirection": "West",
               "ActionComponent": "Screen2"
             }
           }
@@ -552,112 +529,110 @@
             ]
           },
           {
-            "Type": "Box",
-            "Name": "gpuBox",
-            "X": 112,
-            "Y": 331,
-            "Width": 681,
-            "Height": 138,
-            "Color": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            }
-          },
-          {
-            "Type": "Box",
-            "Name": "memoryBox",
-            "X": 112,
-            "Y": 169,
-            "Width": 681,
-            "Height": 138,
-            "Color": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            }
-          },
-          {
-            "Type": "Box",
-            "Name": "cpuBox1",
-            "X": 112,
-            "Y": 13,
-            "Width": 681,
-            "Height": 138,
-            "Color": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            }
-          },
-          {
             "Type": "DynamicGraph",
             "Name": "gpuDynamicGraph",
-            "X": 112,
+            "X": 119,
             "Y": 333,
             "Width": 681,
             "Height": 138,
             "DataSeed": 6132919,
-            "NumberOfValues": 100,
+            "NumberOfValues": 60,
             "MaxY": 100.0,
             "Precision": "1",
-            "LastIndex": 99,
+            "LastIndex": 59,
             "XAxisScale": 1.0,
-            "InsertRandomValues": true,
             "GraphType": "GraphScroll",
             "GraphDrawers": [
               {
                 "Type": "AreaDrawer",
                 "FileNameImage": "",
                 "Color": {
-                  "Red": 20,
-                  "Green": 151,
-                  "Blue": 197
+                  "Red": 106,
+                  "Green": 22,
+                  "Blue": 196
                 }
               }
-            ]
+            ],
+            "XAxisGrid": {
+              "Type": "GraphGrid",
+              "Color": {
+                "Red": 255,
+                "Green": 255,
+                "Blue": 255
+              },
+              "Interval": 20.0,
+              "LineWidth": 1
+            },
+            "YAxisGrid": {
+              "Type": "GraphGrid",
+              "Color": {
+                "Red": 255,
+                "Green": 255,
+                "Blue": 255
+              },
+              "Interval": 20.0,
+              "LineWidth": 1
+            }
           },
           {
             "Type": "DynamicGraph",
             "Name": "memoryDynamicGraph",
-            "X": 112,
+            "X": 119,
             "Y": 171,
             "Width": 681,
             "Height": 138,
             "DataSeed": 6132919,
-            "NumberOfValues": 100,
+            "NumberOfValues": 60,
             "MaxY": 100.0,
             "Precision": "1",
-            "LastIndex": 99,
+            "LastIndex": 59,
             "XAxisScale": 1.0,
-            "InsertRandomValues": true,
             "GraphType": "GraphScroll",
             "GraphDrawers": [
               {
                 "Type": "AreaDrawer",
                 "FileNameImage": "",
                 "Color": {
-                  "Red": 20,
-                  "Green": 151,
-                  "Blue": 197
+                  "Red": 22,
+                  "Green": 77,
+                  "Blue": 196
                 }
               }
-            ]
+            ],
+            "XAxisGrid": {
+              "Type": "GraphGrid",
+              "Color": {
+                "Red": 255,
+                "Green": 255,
+                "Blue": 255
+              },
+              "Interval": 20.0,
+              "LineWidth": 1
+            },
+            "YAxisGrid": {
+              "Type": "GraphGrid",
+              "Color": {
+                "Red": 255,
+                "Green": 255,
+                "Blue": 255
+              },
+              "Interval": 20.0,
+              "LineWidth": 1
+            }
           },
           {
             "Type": "DynamicGraph",
             "Name": "cpuDynamicGraph",
-            "X": 112,
-            "Y": 15,
+            "X": 119,
+            "Y": 14,
             "Width": 681,
             "Height": 138,
             "DataSeed": 86686151,
-            "NumberOfValues": 100,
+            "NumberOfValues": 60,
             "MaxY": 100.0,
             "Precision": "1",
-            "LastIndex": 99,
+            "LastIndex": 59,
             "XAxisScale": 1.0,
-            "InsertRandomValues": true,
             "GraphType": "GraphScroll",
             "GraphDrawers": [
               {
@@ -669,7 +644,27 @@
                   "Blue": 197
                 }
               }
-            ]
+            ],
+            "XAxisGrid": {
+              "Type": "GraphGrid",
+              "Color": {
+                "Red": 255,
+                "Green": 255,
+                "Blue": 255
+              },
+              "Interval": 20.0,
+              "LineWidth": 1
+            },
+            "YAxisGrid": {
+              "Type": "GraphGrid",
+              "Color": {
+                "Red": 255,
+                "Green": 255,
+                "Blue": 255
+              },
+              "Interval": 20.0,
+              "LineWidth": 1
+            }
           },
           {
             "Type": "TextArea",
@@ -793,7 +788,7 @@
             "Action": {
               "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionWipe",
-              "ScreenTransitionDirection": "West",
+              "ScreenTransitionDirection": "East",
               "ActionComponent": "Screen1"
             }
           },
@@ -806,7 +801,7 @@
             "Action": {
               "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionWipe",
-              "ScreenTransitionDirection": "West",
+              "ScreenTransitionDirection": "East",
               "ActionComponent": "Screen1"
             }
           },
@@ -819,7 +814,7 @@
             "Action": {
               "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionWipe",
-              "ScreenTransitionDirection": "West",
+              "ScreenTransitionDirection": "East",
               "ActionComponent": "Screen1"
             }
           },
@@ -832,7 +827,7 @@
             "Action": {
               "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionWipe",
-              "ScreenTransitionDirection": "West",
+              "ScreenTransitionDirection": "East",
               "ActionComponent": "Screen1"
             }
           }

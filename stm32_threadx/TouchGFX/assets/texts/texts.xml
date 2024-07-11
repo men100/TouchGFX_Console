@@ -24,9 +24,6 @@
       <Text Id="__SingleUse_UJ4I" Alignment="Center" TypographyId="Default">
         <Translation Language="GB">&lt;value&gt;%</Translation>
       </Text>
-      <Text Id="__SingleUse_PGCO" Alignment="Center" TypographyId="Default">
-        <Translation Language="GB">Show&#10;Graph</Translation>
-      </Text>
       <Text Id="__SingleUse_QFER" Alignment="Center" TypographyId="Default">
         <Translation Language="GB">GPU&#10;Usage</Translation>
       </Text>
@@ -37,30 +34,30 @@
         <Translation Language="GB">CPU&#10;Usage</Translation>
       </Text>
       <Text Id="__SingleUse_BAJR" Alignment="Center" TypographyId="Default">
-        <Translation Language="GB">CPU&#10;Usage</Translation>
+        <Translation Language="GB">CPU Usage</Translation>
       </Text>
       <Text Id="__SingleUse_RA6S" Alignment="Center" TypographyId="Default">
-        <Translation Language="GB">Memory&#10;Usage</Translation>
+        <Translation Language="GB">Memory Usage</Translation>
       </Text>
       <Text Id="__SingleUse_X8D8" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">000</Translation>
       </Text>
-      <Text Id="__SingleUse_2NUH" Alignment="Center" TypographyId="Default">
+      <Text Id="__SingleUse_2NUH" Alignment="Right" TypographyId="Default">
         <Translation Language="GB">&lt;value&gt;%</Translation>
       </Text>
       <Text Id="__SingleUse_5BDZ" Alignment="Center" TypographyId="Default">
-        <Translation Language="GB">GPU&#10;Usage</Translation>
+        <Translation Language="GB">GPU Usage</Translation>
       </Text>
       <Text Id="__SingleUse_C3ZQ" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">000</Translation>
       </Text>
-      <Text Id="__SingleUse_YMYI" Alignment="Center" TypographyId="Default">
+      <Text Id="__SingleUse_YMYI" Alignment="Right" TypographyId="Default">
         <Translation Language="GB">&lt;value&gt;%</Translation>
       </Text>
       <Text Id="__SingleUse_ZQHL" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">000</Translation>
       </Text>
-      <Text Id="__SingleUse_WR48" Alignment="Center" TypographyId="Default">
+      <Text Id="__SingleUse_WR48" Alignment="Right" TypographyId="Default">
         <Translation Language="GB">&lt;value&gt;%</Translation>
       </Text>
       <Text Id="__SingleUse_QXAV" Alignment="Left" TypographyId="Default">

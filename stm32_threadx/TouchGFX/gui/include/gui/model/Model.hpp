@@ -8,6 +8,8 @@ class ModelListener;
 class Model
 {
 public:
+	static const int USAGE_ARRAY_NUM = 60;
+
     Model();
 
     void bind(ModelListener* listener)
@@ -21,9 +23,12 @@ public:
     bool getBackLightState() { return isBackLightOn; }
 
     uint8_t getSystemVolume() { return systemVolume; }
-    uint8_t getCpuUsage() { return cpuUsage; }
-    uint8_t getMemoryUsage() { return memoryUsage; }
-    uint8_t getGpuUsage() { return gpuUsage; }
+    uint8_t getCpuUsage() { return cpuUsage[usageIndex]; }
+    uint8_t getMemoryUsage() { return memoryUsage[usageIndex]; }
+    uint8_t getGpuUsage() { return gpuUsage[usageIndex]; }
+    void setEachUsage(uint8_t cpu, uint8_t memory, uint8_t gpu);
+    void getEachUsage(uint8_t cpu[], uint8_t memory[], uint8_t gpu[]);
+    uint8_t getUsageIndex() { return usageIndex; }
 
     void play();
     void nextMusic();
@@ -42,9 +47,11 @@ private:
     int16_t tickCounter;
     bool isBackLightOn;
     uint8_t systemVolume;
-    uint8_t cpuUsage;
-    uint8_t memoryUsage;
-    uint8_t gpuUsage;
+
+    uint8_t usageIndex;
+    uint8_t cpuUsage[USAGE_ARRAY_NUM];
+    uint8_t memoryUsage[USAGE_ARRAY_NUM];
+    uint8_t gpuUsage[USAGE_ARRAY_NUM];
 };
 
 #endif // MODEL_HPP

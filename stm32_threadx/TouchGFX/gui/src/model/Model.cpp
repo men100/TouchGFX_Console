@@ -49,9 +49,15 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 Model::Model() : modelListener(0),
 		currentScreenIndex(0), tickCounter(0),
 		isBackLightOn(true),
-		systemVolume(0), cpuUsage(0), memoryUsage(0), gpuUsage(0)
+		systemVolume(0), usageIndex(0)
 {
   printf("Model Constructor\n");
+
+  for (int i = 0; i < USAGE_ARRAY_NUM; i++) {
+	 cpuUsage[i] = 0;
+	 memoryUsage[i] = 0;
+	 gpuUsage[i] = 0;
+  }
 
   // Model まで起動したので、RED LED を消灯する (Active Low)
   HAL_GPIO_WritePin(USER_LD2_RED_GPIO_Port, USER_LD2_RED_Pin, GPIO_PIN_SET);
@@ -93,9 +99,7 @@ void Model::tick()
 	switch (packet.command) {
 	case COMMAND_INFO:
 		systemVolume = packet.volume;
-		cpuUsage = packet.cpuUsage;
-		memoryUsage = packet.memoryUsage;
-		gpuUsage = packet.gpuUsage;
+		setEachUsage(packet.cpuUsage, packet.memoryUsage, packet.gpuUsage);
 		break;
 
 	case COMMAND_VLUP:
@@ -125,6 +129,39 @@ void Model::setBackLightState(bool isOn)
 	HAL_GPIO_WritePin(USER_LD3_GREEN_GPIO_Port, USER_LD3_GREEN_Pin, isOn ? GPIO_PIN_SET : GPIO_PIN_RESET);
 
 	isBackLightOn = isOn;
+}
+
+void Model::setEachUsage(uint8_t cpu, uint8_t memory, uint8_t gpu)
+{
+	usageIndex++;
+	if (usageIndex >= USAGE_ARRAY_NUM) {
+		usageIndex = 0;
+	}
+	cpuUsage[usageIndex] = cpu;
+	memoryUsage[usageIndex] = memory;
+	gpuUsage[usageIndex] = gpu;
+}
+
+void Model::getEachUsage(uint8_t cpu[], uint8_t memory[], uint8_t gpu[]) {
+	uint8_t start, end;
+
+	start = usageIndex + 1;
+	if (start >= USAGE_ARRAY_NUM) {
+		start = 0;
+	}
+	end = usageIndex;
+
+	// 時系列に並んだ配列にして返す。まずは start から配列の末尾まで
+	if (start != 0) {
+		memcpy(cpu, cpuUsage + start, sizeof(uint8_t)*(USAGE_ARRAY_NUM - start));
+		memcpy(memory, memoryUsage + start, sizeof(uint8_t)*(USAGE_ARRAY_NUM - start));
+		memcpy(gpu, gpuUsage + start, sizeof(uint8_t)*(USAGE_ARRAY_NUM - start));
+	}
+
+	// 次に 0 から end まで
+	memcpy(cpu + (USAGE_ARRAY_NUM - start), cpuUsage, sizeof(uint8_t)*(end + 1));
+	memcpy(memory + (USAGE_ARRAY_NUM - start), memoryUsage, sizeof(uint8_t)*(end + 1));
+	memcpy(gpu + (USAGE_ARRAY_NUM - start), gpuUsage, sizeof(uint8_t)*(end + 1));
 }
 
 void Model::play()
