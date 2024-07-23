@@ -12,13 +12,15 @@
 #ifndef __DFRobot_SCD4X_H__
 #define __DFRobot_SCD4X_H__
 
-#include <Arduino.h>
-#include <Wire.h>
+//#include <Arduino.h>
+//#include <Wire.h>
+#include <stdio.h>
+#include <stdint.h>
+#include "stm32u5xx_hal.h"
 
-
-// #define ENABLE_DBG   //!< Open this macro and you can see the details of the program
+//#define ENABLE_DBG   //!< Open this macro and you can see the details of the program
 #ifdef ENABLE_DBG
-  #define DBG(...) {Serial.print("[");Serial.print(__FUNCTION__); Serial.print("(): "); Serial.print(__LINE__); Serial.print(" ] "); Serial.println(__VA_ARGS__);}
+  #define DBG(...) {printf("[");printf(__FUNCTION__); printf("(): "); printf(__LINE__); printf(" ] "); printf(__VA_ARGS__);}
 #else
   #define DBG(...)
 #endif
@@ -97,7 +99,7 @@ public:
    * @param i2cAddr - SCD4X I2C address.
    * @return None
    */
-  DFRobot_SCD4X(TwoWire *pWire=&Wire, uint8_t i2cAddr=SCD4X_I2C_ADDR);
+  DFRobot_SCD4X(I2C_HandleTypeDef* pI2c, uint8_t i2cAddr=SCD4X_I2C_ADDR);
 
   /**
    * @fn begin
@@ -354,7 +356,7 @@ protected:
 
 private:
   // Private variables
-  TwoWire *_pWire;   // Pointer to I2C communication method
+  I2C_HandleTypeDef *_pI2c; // Pointer to I2C handle
   uint8_t _deviceAddr;   // Address of the device for I2C communication
 };
 

@@ -10,19 +10,18 @@
  * @url https://github.com/DFRobot/DFRobot_SCD4X
  */
 #include "DFRobot_SCD4X.h"
+#include <cstring>
 
 /**************************** Init and reset ********************************/
 
-DFRobot_SCD4X::DFRobot_SCD4X(TwoWire *pWire, uint8_t i2cAddr)
+DFRobot_SCD4X::DFRobot_SCD4X(I2C_HandleTypeDef* pI2c, uint8_t i2cAddr)
 {
+  _pI2c = pI2c;
   _deviceAddr = i2cAddr;
-  _pWire = pWire;
 }
 
 bool DFRobot_SCD4X::begin(void)
 {
-  _pWire->begin();   // Wire.h(I2C)library function initialize wire library
-
   enablePeriodMeasure(SCD4X_STOP_PERIODIC_MEASURE);
 
   uint16_t buf[3];
@@ -37,23 +36,26 @@ bool DFRobot_SCD4X::begin(void)
 void DFRobot_SCD4X::setSleepMode(uint16_t mode)
 {
   writeData(mode, NULL, 0);
-  if(SCD4X_WAKE_UP == mode)
-    delay(20);   // Give it some time to switch mode
+  if(SCD4X_WAKE_UP == mode) {
+    HAL_Delay(20); // Give it some time to switch mode
+  }
 }
 
 uint16_t DFRobot_SCD4X::performSelfTest(void)
 {
   writeData(SCD4X_PERFORM_SELF_TEST, NULL, 0);
 
-  delay(10000);
+  HAL_Delay(10000);
 
-  _pWire->requestFrom(_deviceAddr, (uint8_t)3);   // Master device requests size bytes from slave device, which can be accepted by master device with read() or available()
-
-  uint8_t count = 0;
   uint8_t buf[3] = {0};
+  HAL_StatusTypeDef status;
 
-  while (_pWire->available()) {
-    buf[count++] = _pWire->read();   // Use read() to receive and put into buf
+  // I2Cデバイスからデータを要求して受信
+  status = HAL_I2C_Master_Receive(_pI2c, (_deviceAddr << 1), buf, 3, HAL_MAX_DELAY);
+
+  if (status != HAL_OK) {
+	  printf("performSelfTest: HAL_I2C_Master_Receive failed(%d)\n", status);
+	  return 0xffff;
   }
 
   return SCD4X_CONCAT_BYTES(buf[0], buf[1]);
@@ -63,14 +65,14 @@ void DFRobot_SCD4X::moduleReinit(void)
 {
   writeData(SCD4X_REINIT, NULL, 0);
 
-  delay(20);
+  HAL_Delay(20);
 }
 
 void DFRobot_SCD4X::performFactoryReset(void)
 {
   writeData(SCD4X_PERFORM_FACTORY_RESET, NULL, 0);
 
-  delay(1200);
+  HAL_Delay(1200);
 }
 
 /********************************* Measurement Function *************************************/
@@ -80,9 +82,9 @@ void DFRobot_SCD4X::measureSingleShot(uint16_t mode)
   writeData(mode, NULL, 0);
 
   if(SCD4X_MEASURE_SINGLE_SHOT == mode) {
-    delay(5000);
+    HAL_Delay(5000);
   } else if(SCD4X_MEASURE_SINGLE_SHOT_RHT_ONLY == mode) {
-    delay(50);
+	HAL_Delay(50);
   }
 }
 
@@ -90,8 +92,9 @@ void DFRobot_SCD4X::enablePeriodMeasure(uint16_t mode)
 {
   writeData(mode, NULL, 0);
 
-  if(SCD4X_STOP_PERIODIC_MEASURE == mode)
-    delay(500);   // Give it some time to switch mode
+  if(SCD4X_STOP_PERIODIC_MEASURE == mode) {
+    HAL_Delay(500); // Give it some time to switch mode
+  }
 }
 
 void DFRobot_SCD4X::readMeasurement(sSensorMeasurement_t * data)
@@ -178,15 +181,17 @@ int16_t DFRobot_SCD4X::performForcedRecalibration(uint16_t CO2ppm)
 
   free(sendPack);
 
-  delay(400);   // command execution time
+  HAL_Delay(400); // command execution time
 
-  _pWire->requestFrom(_deviceAddr, (uint8_t)3);   // Master device requests size bytes from slave device, which can be accepted by master device with read() or available()
-
-  uint8_t count = 0;
   uint8_t buf[3] = {0};
+  HAL_StatusTypeDef status;
 
-  while (_pWire->available()) {
-    buf[count++] = _pWire->read();   // Use read() to receive and put into buf
+  // I2Cデバイスから3バイトのデータを要求して受信
+  status = HAL_I2C_Master_Receive(_pI2c, (_deviceAddr << 1), buf, 3, HAL_MAX_DELAY);
+
+  if (status != HAL_OK) {
+	  printf("performForcedRecalibration: HAL_I2C_Master_Receive failed(%d)\n", status);
+	  return -1;
   }
 
   return (int16_t)(SCD4X_CONCAT_BYTES(buf[0], buf[1]) - 0x8000);
@@ -219,7 +224,8 @@ void DFRobot_SCD4X::persistSettings(void)
 {
   writeData(SCD4X_PERSIST_SETTINGS, NULL, 0);
 
-  delay(800);
+//  delay(800);
+  HAL_Delay(800);
 }
 
 /*************************** get serial number *****************************/
@@ -281,39 +287,55 @@ void DFRobot_SCD4X::writeData(uint16_t cmd, const void* pBuf, size_t size)
   //   DBG("pBuf ERROR!! : null pointer");
   // }
   uint8_t * _pBuf = (uint8_t *)pBuf;
+  uint8_t buffer[2 + size];  // コマンドとデータを格納するバッファ
+  HAL_StatusTypeDef status;
 
-  _pWire->beginTransmission(_deviceAddr);
-  _pWire->write((uint8_t)((cmd >> 8) & 0xFF));
-  _pWire->write((uint8_t)(cmd & 0xFF));
-
-  for(size_t i = 0; i < size; i++) {
-    // DBG(_pBuf[i]);
-    _pWire->write(_pBuf[i]);
+  // バッファにコマンドとデータを格納
+  buffer[0] = (uint8_t)((cmd >> 8) & 0xFF);
+  buffer[1] = (uint8_t)(cmd & 0xFF);
+  for (size_t i = 0; i < size; i++) {
+      buffer[2 + i] = _pBuf[i];
   }
-  _pWire->endTransmission();
+
+  // I2C通信でデータを送信
+  status = HAL_I2C_Master_Transmit(_pI2c, (_deviceAddr << 1), buffer, 2 + size, HAL_MAX_DELAY);
+
+  if (status != HAL_OK) {
+	  printf("writeData: HAL_I2C_Master_Transmit failed(%d)\n", status);
+  }
 }
 
 size_t DFRobot_SCD4X::readData(uint16_t cmd, void* pBuf, size_t size)
 {
+  HAL_StatusTypeDef status;
   size_t count = 0;
   if(NULL == pBuf) {
     DBG("pBuf ERROR!! : null pointer");
+    return 0;
   }
   uint8_t * _pBuf = (uint8_t*)pBuf;
+  uint8_t cmdBuffer[2];
+  cmdBuffer[0] = (uint8_t)((cmd >> 8) & 0xFF);
+  cmdBuffer[1] = (uint8_t)(cmd & 0xFF);
 
-  _pWire->beginTransmission(_deviceAddr);
-  _pWire->write((uint8_t)((cmd >> 8) & 0xFF));
-  _pWire->write((uint8_t)(cmd & 0xFF));
-
-  if(0 != _pWire->endTransmission()) {   // Used Wire.endTransmission() to end a slave transmission started by beginTransmission() and arranged by write().
-    DBG("endTransmission ERROR!!");
-  } else {
-    _pWire->requestFrom(_deviceAddr, (uint8_t)size);   // Master device requests size bytes from slave device, which can be accepted by master device with read() or available()
-    
-    while (_pWire->available()) {
-      _pBuf[count++] = _pWire->read();   // Use read() to receive and put into buf
-    }
-    // _pWire->endTransmission();
+  // コマンド送信
+  status = HAL_I2C_Master_Transmit(_pI2c, (_deviceAddr << 1), cmdBuffer, 2, HAL_MAX_DELAY);
+  if (status != HAL_OK) {
+	printf("readData: HAL_I2C_Master_Transmit failed(%d)\n", status);
+    return 0;
   }
+
+  // すぐ受信するとエラーになるので、待つようにする
+  HAL_Delay(1);
+
+  // データ受信
+  status = HAL_I2C_Master_Receive(_pI2c, (_deviceAddr << 1), _pBuf, size, HAL_MAX_DELAY);
+  if (status == HAL_OK) {
+    count = size;  // 成功した場合、要求したサイズを返す
+  } else {
+	printf("readData: HAL_I2C_Master_Receive failed(%d)\n", status);
+	return 0;
+  }
+
   return count;
 }
