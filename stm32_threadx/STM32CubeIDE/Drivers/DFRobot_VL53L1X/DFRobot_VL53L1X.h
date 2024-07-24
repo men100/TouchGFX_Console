@@ -1,5 +1,8 @@
-#include "Wire.h"
-#include "Arduino.h"
+#ifndef __DFRobot_VL53L1X_H__
+#define __DFRobot_VL53L1X_H__
+
+#include <stdio.h>
+#include "stm32u5xx_hal.h"
 
 #define SOFT_RESET                                            0x0000
 #define VL53L1_I2C_SLAVE__DEVICE_ADDRESS                      0x0001
@@ -75,9 +78,8 @@ typedef enum {
 class DFRobot_VL53L1X
 {
 public:
-  DFRobot_VL53L1X(TwoWire *pWire);
+  DFRobot_VL53L1X(I2C_HandleTypeDef* pI2C, uint8_t i2cAddr=VL53L1X_DEFAULT_DEVICE_ADDRESS);
   bool begin(); // This function loads the 135 bytes default values to initialize the sensor. 
-  void update(); //Waiting for calibration
   void setInterruptPolarityHigh();//Set the interrupt polarity to high
   void setInterruptPolarityLow();//Set the interrupt polarity to low
   void startRanging();//Start ranging
@@ -105,13 +107,10 @@ public:
   void clearInterrupt();//clear interrupt
   eVL53L1X_Status lastOperateStatus;
 protected:
-  bool cmdSerialDataAvailable();//Return true if it detects that the serial port has data, otherwise it returns false
-  int cmdPrase();// Parsing serial data commands
-  void calibration(int mode);//enter calibration mode to calibration sensor
   void setInterruptPolarity(uint8_t NewPolarity);//set Interrupt Polarity
   void setDistanceMode(uint16_t DM);// Set distance mode,long: 0~4m,short: 0~1.3m
 private:
-  TwoWire *_pWire;
+  I2C_HandleTypeDef *_pI2C; // Pointer to I2C handle
   uint16_t getSignalRate();//get signal rate
   void setSigmaThreshold(uint16_t Sigma);//set Sigma Threshold
   void writeByteData(uint16_t index, uint8_t data);//write data for 1 bytes
@@ -121,10 +120,10 @@ private:
   void readWordData(uint16_t index, uint16_t *data);//Read data for a bytes
   void readWordData32(uint16_t index, uint32_t *data);//Read data for 4 bytes
   void i2CWrite(uint16_t reg, uint8_t *pBuf, uint16_t len);//IIC writes len bytes of data
-  void i2CRead(uint16_t reg, uint8_t *pBuf, uint16_t len);//IIC reads len bytes of data
+  size_t i2CRead(uint16_t reg, uint8_t *pBuf, uint16_t len);//IIC reads len bytes of data
 
-  uint8_t   addr = 0x29;
-  char cmdRecvBuf[CMDRECVBUFSIZE+1];
-  int cmdRecvBufIndex;
+  uint8_t _deviceAddr;
   double decimal;
 };
+
+#endif

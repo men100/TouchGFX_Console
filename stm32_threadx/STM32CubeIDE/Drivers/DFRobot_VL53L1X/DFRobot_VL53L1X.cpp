@@ -1,4 +1,5 @@
 #include "DFRobot_VL53L1X.h"
+#include <cstring>
 
 const uint8_t VL51L1X_DEFAULT_CONFIGURATION[] = {
 0x00, /* 0x2d : set bit 2 and 5 to 1 for fast plus mode (1MHz I2C), else don't touch */
@@ -94,16 +95,14 @@ const uint8_t VL51L1X_DEFAULT_CONFIGURATION[] = {
 0x00  /* 0x87 : start ranging, use StartRanging() or StopRanging(), If you want an automatic start after VL53L1X_init() call, put 0x40 in location 0x87 */
 };
 
-DFRobot_VL53L1X::DFRobot_VL53L1X(TwoWire *pWire){
-  _pWire = pWire;
-  memset(cmdRecvBuf, 0, CMDRECVBUFSIZE+1);
-  cmdRecvBufIndex = 0;
+DFRobot_VL53L1X::DFRobot_VL53L1X(I2C_HandleTypeDef* pI2C, uint8_t i2cAddr){
+  _pI2C = pI2C;
+  _deviceAddr = i2cAddr;
   decimal = 0.0;
 }
 
 bool DFRobot_VL53L1X::begin()
 {
-  _pWire->begin();
   lastOperateStatus = eVL53L1X_InitError;
   uint8_t Addr = 0x00, tmp = 0;
 
@@ -114,7 +113,7 @@ bool DFRobot_VL53L1X::begin()
   while(tmp==0){
       tmp = checkForDataReady();
       //Serial.println(tmp);
-      delay(500);
+      HAL_Delay(500);
   }
   tmp  = 0;
   clearInterrupt();
@@ -123,11 +122,6 @@ bool DFRobot_VL53L1X::begin()
   writeByteData(0x0B, 0);
   lastOperateStatus = eVL53L1X_ok;
   return true;
-}
-void DFRobot_VL53L1X::update(){
-  if(cmdSerialDataAvailable()){
-      calibration(cmdPrase());
-  }
 }
 
 void DFRobot_VL53L1X::clearInterrupt()
@@ -189,7 +183,7 @@ bool DFRobot_VL53L1X::checkForDataReady()
   //Serial.println(IntPol);
   readByteData(GPIO__TIO_HV_STATUS, &Temp);
   //Serial.println(Temp);
-  delay(1);
+  HAL_Delay(1);
   if ((Temp & 1) == IntPol)
       return  1;
   else
@@ -361,15 +355,15 @@ void DFRobot_VL53L1X::setInterMeasurementInMs(uint16_t InterMeasMs)
 {
   uint16_t ClockPLL;
   double data;
-  Serial.print("setInterMeasurementInMs: ");
+  printf("setInterMeasurementInMs\n");
   readWordData(VL53L1_RESULT__OSC_CALIBRATE_VAL, &ClockPLL);
-  Serial.println(ClockPLL,HEX);
+  printf("ClockPLL: %d\n", ClockPLL);
   ClockPLL = ClockPLL & 0x3FF;
-  Serial.println(ClockPLL,HEX);
+  printf("ClockPLL: %d\n", ClockPLL);
   writeWordData32(VL53L1_SYSTEM__INTERMEASUREMENT_PERIOD, (uint32_t)(ClockPLL*InterMeasMs*1.075));
   data = (ClockPLL*InterMeasMs*1075)%1000;
   while(data > 1){
-    Serial.print("data = ");Serial.println(data);
+	printf("data = %f\n", data);
     data /= 10.0;
   }
   decimal = data;
@@ -401,155 +395,6 @@ uint16_t DFRobot_VL53L1X::getDistance()
   if(tmp < 0)
       tmp = 0;
   return tmp;
-}
-bool DFRobot_VL53L1X::cmdSerialDataAvailable(){
-  char cmdRecvChar;
-  static unsigned long cmdReceivedTimeOut = millis();
-  while(Serial.available() > 0){
-    if (millis() - cmdReceivedTimeOut > 500U) 
-    {
-      cmdRecvBufIndex = 0;
-      memset(cmdRecvBuf,0,(CMDRECVBUFSIZE+1));
-    }
-    cmdReceivedTimeOut = millis();
-    cmdRecvChar = Serial.read();
-    if (cmdRecvChar == '\n' || cmdRecvBufIndex==CMDRECVBUFSIZE){
-        cmdRecvBufIndex = 0;
-        strupr(cmdRecvBuf);
-        return true;
-    }else{
-      cmdRecvBuf[cmdRecvBufIndex] = cmdRecvChar;
-      cmdRecvBufIndex++;
-    }
-  }
-  return false;
-}
-int DFRobot_VL53L1X::cmdPrase(){
-  int modeIndex = 0;
-  if(strstr(cmdRecvBuf, "ENTER") != NULL){
-      modeIndex = 1;
-  }else if(strstr(cmdRecvBuf, "OFFSET:") != NULL){
-      modeIndex = 2;
-  }else if(strstr(cmdRecvBuf, "DISTANCE:") != NULL){
-      modeIndex = 3;
-  }else if(strstr(cmdRecvBuf, "EXIT") != NULL){
-      modeIndex = 4;
-  }
-  return modeIndex;
-}
-void DFRobot_VL53L1X::calibration(int mode){
-  char *cmdRecvBufPtr = NULL;
-  static bool enterCalFlag = false;
-  static int calFinishFlag = 0;
-  int16_t offset = 0;
-  uint16_t distance = 0;
-  switch(mode){
-      case 0:
-        Serial.println();
-        Serial.println(F("Command Error!"));
-        Serial.println();
-        break;
-      case 1:
-        enterCalFlag = true;
-        calFinishFlag = 0;
-        Serial.println();
-        Serial.println(F(">>>Enter Calibration Mode<<<"));
-        Serial.println(F(">>>Please fix the distance sensor.<<<"));
-        Serial.println();
-        while(getOffset() != 0){//clear offset
-            setOffset(0);
-            setXTalk(0);
-            delay(1);
-        }
-        break;
-      case 2:
-        if(enterCalFlag){
-            calFinishFlag = 0;
-            setOffset(0);
-            Serial.println("\nWait for 5s.");
-            delay(5000);
-            cmdRecvBufPtr = strstr(cmdRecvBuf, "OFFSET:");
-            cmdRecvBufPtr += strlen("OFFSET:");
-            offset = atoi(cmdRecvBufPtr);
-            setOffset(offset);
-            if(getOffset() == offset){
-                Serial.println();
-                Serial.println(F(">>>Confrim Successful!<<<"));
-                Serial.print(F(">>>offset: "));
-                Serial.print(getOffset());
-                Serial.println("mm");
-                Serial.println(F(">>>Send EXIT to Save and Exit<<<"));
-                Serial.println();
-                calFinishFlag = 1;
-            }else{
-                Serial.println();
-                Serial.println(F(">>>Confirm Failed,Try Again<<<"));
-                Serial.println();
-                calFinishFlag = 0;
-            }
-        }else{
-            Serial.println();
-            Serial.println(F(">>>Please input command(enter) to enter calibration mode.<<<"));
-            Serial.println();
-        }
-        break;
-      case 3:
-        if(enterCalFlag){
-            Serial.println("\nWait for 5s.");
-            delay(5000);
-            calFinishFlag = 0;
-            setOffset(0);
-            delay(5000);
-            cmdRecvBufPtr = strstr(cmdRecvBuf, "DISTANCE:");
-            cmdRecvBufPtr += strlen("DISTANCE:");
-            distance = atoi(cmdRecvBufPtr);
-            calibrateOffset(distance);
-            int i = 0;
-            while(i < 10){
-              i++;
-              uint16_t dis = getDistance();
-              Serial.print("\n>>>calibration: ");
-              Serial.print(dis);
-              Serial.println("mm");
-              if((dis < distance*103/100) && (dis > dis*97/100)){
-                  Serial.println();
-                  Serial.println(F(">>>Confrim Successful!"));
-                  Serial.print(F(">>>Actual distance: "));
-                  Serial.print(distance);
-                  Serial.println("mm");
-                  Serial.print(F(">>>offset: "));
-                  Serial.print(getOffset());
-                  Serial.println("mm");
-                  Serial.println(F(">>>Send EXIT to Save and Exit<<<"));
-                  Serial.println();
-                  calFinishFlag = 1;
-                  break;
-              }
-            }
-            if(calFinishFlag == 0){
-                Serial.println();
-                Serial.println(F(">>>Confirm Failed,Try Again<<<"));
-                Serial.println();
-            }
-        }else{
-            Serial.println();
-            Serial.println(F(">>>Please input command(enter) to enter calibration mode.<<<"));
-            Serial.println();
-        }
-        break;
-      case 4:
-        if(enterCalFlag){
-            if(calFinishFlag != 0){
-                Serial.print(F(">>>Calibration Successful, "));
-            }else{
-                Serial.print(F(">>>Calibration Failed, "));
-            }
-            Serial.println(F(",Exit Calibration Mode<<<"));
-            Serial.println();
-            calFinishFlag = 0;
-            enterCalFlag = 0;
-        }
-  }
 }
 
 uint16_t DFRobot_VL53L1X::getSignalRate()
@@ -656,8 +501,8 @@ int8_t DFRobot_VL53L1X::calibrateOffset(uint16_t targetDistInMm)
   for (i = 0; i < 50; i++) {
       while (tmp == 0){
           tmp = checkForDataReady();
-          Serial.println(tmp);
-          delay(500);
+          printf("%d\n", tmp);
+          HAL_Delay(500);
       }
       distance = getDistance();
       clearInterrupt();
@@ -685,7 +530,7 @@ int8_t DFRobot_VL53L1X::calibrateXTalk(uint16_t targetDistInMm)
   for (i = 0; i < 50; i++) {
       while (tmp == 0){
           tmp = checkForDataReady();
-          delay(500);
+          HAL_Delay(500);
       }
       sr = getSignalRate();
       distance = getDistance();
@@ -726,13 +571,13 @@ void DFRobot_VL53L1X::writeWordData32(uint16_t index, uint32_t data)
   uint8_t buffer[4];
 
   buffer[0] = (data >> 24) & 0xFF;
-  Serial.print("buf0: ");Serial.println(buffer[0], HEX);
+  printf("buf0: 0x%02x\n", buffer[0]);
   buffer[1] = (data >> 16) & 0xFF;
-  Serial.print("buf1: ");Serial.println(buffer[1], HEX);
+  printf("buf1: 0x%02x\n", buffer[1]);
   buffer[2] = (data >> 8) & 0xFF;
-  Serial.print("buf2: ");Serial.println(buffer[2], HEX);
+  printf("buf2: 0x%02x\n", buffer[2]);
   buffer[3] = (data >>  0) & 0xFF;
-  Serial.print("buf3: ");Serial.println(buffer[3],HEX);
+  printf("buf3: 0x%02x\n", buffer[3]);
   i2CWrite(index, (uint8_t *)buffer, 4);
 }
 
@@ -759,31 +604,57 @@ void DFRobot_VL53L1X::readWordData32(uint16_t index, uint32_t *data)
 
 void DFRobot_VL53L1X::i2CWrite(uint16_t reg, uint8_t *pBuf, uint16_t len)
 {
-    lastOperateStatus = eVL53L1X_WriteRegError;
-    _pWire->beginTransmission(addr);
-    uint8_t buffer[2];
-    buffer[0]=(uint8_t) reg>>8;
-    buffer[1]=(uint8_t) reg&0xFF;
-    _pWire->write(buffer, 2);
-    for(uint16_t i = 0; i < len; i ++)
-        _pWire->write(pBuf[i]);
-    _pWire->endTransmission();
     lastOperateStatus = eVL53L1X_ok;
+
+    HAL_StatusTypeDef status;
+    uint8_t * _pBuf = (uint8_t *)pBuf;
+    uint8_t buffer[2 + len];  // コマンドとデータを格納するバッファ
+
+    // バッファにコマンドとデータを格納
+    buffer[0] = (uint8_t)((reg >> 8) & 0xFF);
+    buffer[1] = (uint8_t)(reg & 0xFF);
+    for (size_t i = 0; i < len; i++) {
+      buffer[2 + i] = _pBuf[i];
+    }
+
+    // I2C通信でデータを送信
+    status = HAL_I2C_Master_Transmit(_pI2C, (_deviceAddr << 1), buffer, 2 + len, HAL_MAX_DELAY);
+    if (status) {
+      printf("i2CWrite: HAL_I2C_Master_Transmit failed(status=%d)\n", status);
+      lastOperateStatus = eVL53L1X_WriteRegError;
+    }
 }
 
-void DFRobot_VL53L1X::i2CRead(uint16_t reg, uint8_t *pBuf, uint16_t len)
+size_t DFRobot_VL53L1X::i2CRead(uint16_t reg, uint8_t *pBuf, uint16_t len)
 {
-    lastOperateStatus = eVL53L1X_ReadRegError;
-    _pWire->beginTransmission(addr);
-    uint8_t buffer[2];
-    buffer[0]=(uint8_t) reg >> 8;
-    buffer[1]=(uint8_t) reg & 0xFF;
-    _pWire->write(buffer, 2);
-    if(_pWire->endTransmission() != 0)
-        return;
-    _pWire->requestFrom(addr, (uint8_t) len);
-    for(uint16_t i = 0; i < len; i ++) {
-        pBuf[i] = _pWire->read();
-    }
     lastOperateStatus = eVL53L1X_ok;
+
+    HAL_StatusTypeDef status;
+    size_t count = 0;
+    uint8_t * _pBuf = (uint8_t*)pBuf;
+    uint8_t regBuffer[2];
+    regBuffer[0] = (uint8_t)((reg >> 8) & 0xFF);
+    regBuffer[1] = (uint8_t)(reg & 0xFF);
+
+    // コマンド送信
+    status = HAL_I2C_Master_Transmit(_pI2C, (_deviceAddr << 1), regBuffer, 2, HAL_MAX_DELAY);
+    if (status != HAL_OK) {
+      printf("i2CRead: HAL_I2C_Master_Transmit failed(status=%d)\n", status);
+      lastOperateStatus = eVL53L1X_ReadRegError;
+      return count;
+    }
+
+    // すぐ受信するとエラーになるので、待つようにする
+    HAL_Delay(1);
+
+    // データ受信
+    status = HAL_I2C_Master_Receive(_pI2C, (_deviceAddr << 1), _pBuf, len, HAL_MAX_DELAY);
+    if (status == HAL_OK) {
+	  count = len;  // 成功した場合、要求したサイズを返す
+    } else {
+    	printf("i2CRead: HAL_I2C_Master_Receive failed(status=%d)\n", status);
+        lastOperateStatus = eVL53L1X_ReadRegError;
+    }
+
+    return count;
 }
